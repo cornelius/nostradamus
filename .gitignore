@@ -2,3 +2,5 @@ Makefile
 *.o
 moc_*
 nostradamus
+
+choices.xml
