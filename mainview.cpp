@@ -19,20 +19,37 @@
   USA.
 */
 
-#include "choicesview.h"
-
 #include "mainview.h"
 
-#include <QtGui>
+#include "choicesview.h"
+#include "ranker.h"
 
 MainView::MainView()
 {
-  QBoxLayout *topLayout = new QHBoxLayout( this );
-  QLabel *left = new QLabel("LEFT");
-  topLayout->addWidget( left );
+  QBoxLayout *topLayout = new QHBoxLayout;
+  setLayout( topLayout );
+
+  QBoxLayout *navLayout = new QVBoxLayout;
+  topLayout->addLayout( navLayout );
+  
+  QPushButton *button = new QPushButton( "Choices" );
+  navLayout->addWidget( button );
+  connect( button, SIGNAL( clicked() ), SLOT( showChoices() ) );
+  
+  button = new QPushButton( "Rank" );
+  navLayout->addWidget( button );
+  connect( button, SIGNAL( clicked() ), SLOT( showRanker() ) );
+
+  navLayout->addStretch( 1 );
+
+  m_workAreaLayout = new QStackedLayout;
+  topLayout->addLayout( m_workAreaLayout );
 
   m_choicesView = new ChoicesView;
-  topLayout->addWidget( m_choicesView );
+  m_workAreaLayout->addWidget( m_choicesView );
+
+  m_ranker = new Ranker;
+  m_workAreaLayout->addWidget( m_ranker );
 }
 
 void MainView::load()
@@ -43,4 +60,14 @@ void MainView::load()
 void MainView::save()
 {
   m_choicesView->saveChoices();
+}
+
+void MainView::showChoices()
+{
+  m_workAreaLayout->setCurrentWidget( m_choicesView );
+}
+
+void MainView::showRanker()
+{
+  m_workAreaLayout->setCurrentWidget( m_ranker );
 }

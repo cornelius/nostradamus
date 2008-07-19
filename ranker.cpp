@@ -18,32 +18,13 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef MAINVIEW_H
-#define MAINVIEW_H
 
-#include <QtGui>
+#include "ranker.h"
 
-class ChoicesView;
-class Ranker;
-
-class MainView : public QWidget
+Ranker::Ranker()
 {
-    Q_OBJECT
-  public:
-    MainView();
+  QBoxLayout *topLayout = new QVBoxLayout( this );
 
-    void save();
-    void load();
-
-  protected slots:
-    void showChoices();
-    void showRanker();
-
-  private:
-    ChoicesView *m_choicesView;
-    Ranker *m_ranker;
-    
-    QStackedLayout *m_workAreaLayout;
-};
-
-#endif
+  QLabel *label = new QLabel( "Ranker" );
+  topLayout->addWidget( label );
+}

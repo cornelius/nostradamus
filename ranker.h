@@ -18,32 +18,20 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef MAINVIEW_H
-#define MAINVIEW_H
+#ifndef RANKER_H
+#define RANKER_H
 
 #include <QtGui>
 
-class ChoicesView;
-class Ranker;
-
-class MainView : public QWidget
+class Ranker : public QWidget
 {
     Q_OBJECT
   public:
-    MainView();
-
-    void save();
-    void load();
+    Ranker();
 
   protected slots:
-    void showChoices();
-    void showRanker();
 
   private:
-    ChoicesView *m_choicesView;
-    Ranker *m_ranker;
-    
-    QStackedLayout *m_workAreaLayout;
 };
 
 #endif
