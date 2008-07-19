@@ -6,28 +6,26 @@
 
 MainWindow::MainWindow()
 {
-  MainView *mainView = new MainView;
-  setCentralWidget( mainView );
+  m_mainView = new MainView;
+  setCentralWidget( m_mainView );
 
-   createActions();
-   createMenus();
+  m_mainView->load();
+
+  createActions();
+  createMenus();
+
 /*
    createToolBars();
    createStatusBar();
 */
 
-   readSettings();
-
-/*
-   connect(textEdit->document(), SIGNAL(contentsChanged()),
-           this, SLOT(documentWasModified()));
-
-   setCurrentFile("");
-*/
+  readSettings();
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+  m_mainView->save();
+
   writeSettings();
   event->accept();
 /*

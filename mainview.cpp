@@ -31,6 +31,16 @@ MainView::MainView()
   QLabel *left = new QLabel("LEFT");
   topLayout->addWidget( left );
 
-  ChoicesView *choicesView = new ChoicesView;
-  topLayout->addWidget( choicesView );
+  m_choicesView = new ChoicesView;
+  topLayout->addWidget( m_choicesView );
+}
+
+void MainView::load()
+{
+  m_choicesView->loadChoices();
+}
+
+void MainView::save()
+{
+  m_choicesView->saveChoices();
 }

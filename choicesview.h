@@ -29,6 +29,9 @@ class ChoicesView : public QWidget
   public:
     ChoicesView();
 
+    void saveChoices();
+    void loadChoices();
+
   protected slots:
     void newChoice();
 
@@ -36,6 +39,8 @@ class ChoicesView : public QWidget
     QStandardItemModel *m_model; 
 
     QLineEdit *m_newChoiceEdit;
+
+    QString m_filename;
 };
 
 #endif

@@ -23,11 +23,18 @@
 
 #include <QWidget>
 
+class ChoicesView;
+
 class MainView : public QWidget
 {
   public:
     MainView();
 
+    void save();
+    void load();
+
+  private:
+    ChoicesView *m_choicesView;
 };
 
 #endif

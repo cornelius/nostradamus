@@ -6,18 +6,19 @@
 class QAction;
 class QMenu;
 class QTextEdit;
+class MainView;
 
 class MainWindow : public QMainWindow
 {
     Q_OBJECT
 
-public:
+  public:
     MainWindow();
 
-protected:
+  protected:
     void closeEvent(QCloseEvent *event);
 
-private slots:
+  private slots:
     void newFile();
     void open();
     bool save();
@@ -25,7 +26,7 @@ private slots:
     void about();
     void documentWasModified();
 
-private:
+  private:
     void createActions();
     void createMenus();
     void createToolBars();
@@ -37,6 +38,8 @@ private:
     bool saveFile(const QString &fileName);
     void setCurrentFile(const QString &fileName);
     QString strippedName(const QString &fullFileName);
+
+    MainView *m_mainView;
 
     QTextEdit *textEdit;
     QString curFile;
