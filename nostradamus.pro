@@ -8,5 +8,5 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += mainwindow.h mainview.h
-SOURCES += main.cpp mainwindow.cpp mainview.cpp
+HEADERS += mainwindow.h mainview.h choicesview.h
+SOURCES += main.cpp mainwindow.cpp mainview.cpp choicesview.cpp

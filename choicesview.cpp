@@ -21,16 +21,34 @@
 
 #include "choicesview.h"
 
-#include "mainview.h"
-
 #include <QtGui>
 
-MainView::MainView()
+ChoicesView::ChoicesView()
 {
-  QBoxLayout *topLayout = new QHBoxLayout( this );
-  QLabel *left = new QLabel("LEFT");
-  topLayout->addWidget( left );
+  QBoxLayout *topLayout = new QVBoxLayout( this );
 
-  ChoicesView *choicesView = new ChoicesView;
-  topLayout->addWidget( choicesView );
+  m_model = new QStandardItemModel;
+  
+  QStandardItem *item = new QStandardItem("Eins");
+  m_model->setItem(0,0,item);
+  
+  item = new QStandardItem("Zwei");
+  m_model->setItem(1,0,item);
+
+  QListView *listView = new QListView;
+  topLayout->addWidget( listView );
+  
+  listView->setModel( m_model );
+
+  m_newChoiceEdit = new QLineEdit;
+  topLayout->addWidget( m_newChoiceEdit );
+  connect( m_newChoiceEdit, SIGNAL( returnPressed() ), SLOT( newChoice() ) );
+}
+
+void ChoicesView::newChoice()
+{
+  QStandardItem *item = new QStandardItem( m_newChoiceEdit->text() );
+  m_model->appendRow( item );
+
+  m_newChoiceEdit->setText( QString() );
 }

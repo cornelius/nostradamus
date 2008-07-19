@@ -18,19 +18,24 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-
-#include "choicesview.h"
-
-#include "mainview.h"
+#ifndef CHOICESVIEW_H
+#define CHOICESVIEW_H
 
 #include <QtGui>
 
-MainView::MainView()
+class ChoicesView : public QWidget
 {
-  QBoxLayout *topLayout = new QHBoxLayout( this );
-  QLabel *left = new QLabel("LEFT");
-  topLayout->addWidget( left );
+    Q_OBJECT
+  public:
+    ChoicesView();
 
-  ChoicesView *choicesView = new ChoicesView;
-  topLayout->addWidget( choicesView );
-}
+  protected slots:
+    void newChoice();
+
+  private:
+    QStandardItemModel *m_model; 
+
+    QLineEdit *m_newChoiceEdit;
+};
+
+#endif
