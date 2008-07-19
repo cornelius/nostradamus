@@ -25,6 +25,26 @@ Ranker::Ranker()
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
-  QLabel *label = new QLabel( "Ranker" );
-  topLayout->addWidget( label );
+  topLayout->addStretch( 1 );
+
+  QBoxLayout *choicesLayout = new QHBoxLayout;
+  topLayout->addLayout( choicesLayout );
+
+  QLabel *label = new QLabel( "Left" );
+  choicesLayout->addWidget( label );
+
+  choicesLayout->addStretch( 1 );
+
+  label = new QLabel( "Right" );
+  choicesLayout->addWidget( label );
+
+  QFrame *rankingArea = new QFrame;
+  topLayout->addWidget( rankingArea );
+
+  rankingArea->setFrameStyle( QFrame::Box | QFrame::Raised );
+  rankingArea->setMidLineWidth( 2 );
+
+  rankingArea->setMinimumSize( 80, 80 );
+
+  topLayout->addStretch( 1 );
 }
