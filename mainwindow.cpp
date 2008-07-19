@@ -14,9 +14,11 @@ MainWindow::MainWindow()
 /*
    createToolBars();
    createStatusBar();
+*/
 
    readSettings();
 
+/*
    connect(textEdit->document(), SIGNAL(contentsChanged()),
            this, SLOT(documentWasModified()));
 
@@ -26,6 +28,8 @@ MainWindow::MainWindow()
 
 void MainWindow::closeEvent(QCloseEvent *event)
 {
+  writeSettings();
+  event->accept();
 /*
    if (maybeSave()) {
        writeSettings();
@@ -194,18 +198,18 @@ void MainWindow::createStatusBar()
 
 void MainWindow::readSettings()
 {
-   QSettings settings("Trolltech", "Application Example");
-   QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
-   QSize size = settings.value("size", QSize(400, 400)).toSize();
-   resize(size);
-   move(pos);
+  QSettings settings("Cornelius", "Nostradamus");
+  QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
+  QSize size = settings.value("size", QSize(400, 400)).toSize();
+  resize(size);
+  move(pos);
 }
 
 void MainWindow::writeSettings()
 {
-   QSettings settings("Trolltech", "Application Example");
-   settings.setValue("pos", pos());
-   settings.setValue("size", size());
+  QSettings settings("Cornelius", "Nostradamus");
+  settings.setValue("pos", pos());
+  settings.setValue("size", size());
 }
 
 bool MainWindow::maybeSave()
