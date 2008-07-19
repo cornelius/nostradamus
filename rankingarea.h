@@ -18,30 +18,20 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
+#ifndef RANKINGAREA_H
+#define RANKINGAREA_H
 
-#include "ranker.h"
+#include <QtGui>
 
-#include "rankingarea.h"
-
-Ranker::Ranker()
+class RankingArea : public QFrame
 {
-  QBoxLayout *topLayout = new QVBoxLayout( this );
+    Q_OBJECT
+  public:
+    RankingArea();
 
-  topLayout->addStretch( 1 );
+  protected slots:
 
-  QBoxLayout *choicesLayout = new QHBoxLayout;
-  topLayout->addLayout( choicesLayout );
+  private:
+};
 
-  QLabel *label = new QLabel( "Left" );
-  choicesLayout->addWidget( label );
-
-  choicesLayout->addStretch( 1 );
-
-  label = new QLabel( "Right" );
-  choicesLayout->addWidget( label );
-
-  QFrame *rankingArea = new RankingArea;
-  topLayout->addWidget( rankingArea );
-
-  topLayout->addStretch( 1 );
-}
+#endif

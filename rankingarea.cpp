@@ -19,29 +19,12 @@
   USA.
 */
 
-#include "ranker.h"
-
 #include "rankingarea.h"
 
-Ranker::Ranker()
+RankingArea::RankingArea()
 {
-  QBoxLayout *topLayout = new QVBoxLayout( this );
+  setFrameStyle( QFrame::Box | QFrame::Raised );
+  setMidLineWidth( 2 );
 
-  topLayout->addStretch( 1 );
-
-  QBoxLayout *choicesLayout = new QHBoxLayout;
-  topLayout->addLayout( choicesLayout );
-
-  QLabel *label = new QLabel( "Left" );
-  choicesLayout->addWidget( label );
-
-  choicesLayout->addStretch( 1 );
-
-  label = new QLabel( "Right" );
-  choicesLayout->addWidget( label );
-
-  QFrame *rankingArea = new RankingArea;
-  topLayout->addWidget( rankingArea );
-
-  topLayout->addStretch( 1 );
+  setMinimumSize( 80, 80 );
 }
