@@ -30,6 +30,7 @@ class Ranker : public QWidget
     Ranker();
 
   protected slots:
+    void slotRanked( int );
 
   private:
 };

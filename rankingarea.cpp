@@ -28,3 +28,10 @@ RankingArea::RankingArea()
 
   setMinimumSize( 80, 80 );
 }
+
+void RankingArea::mousePressEvent( QMouseEvent *event )
+{
+  int ranking = event->x() * 100 / width() - 50;
+
+  emit ranked( ranking );
+}

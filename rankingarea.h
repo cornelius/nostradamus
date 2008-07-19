@@ -29,9 +29,11 @@ class RankingArea : public QFrame
   public:
     RankingArea();
 
-  protected slots:
+  signals:
+    void ranked( int );
 
-  private:
+  protected:
+    void mousePressEvent( QMouseEvent *event );
 };
 
 #endif

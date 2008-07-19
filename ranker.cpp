@@ -42,6 +42,13 @@ Ranker::Ranker()
 
   QFrame *rankingArea = new RankingArea;
   topLayout->addWidget( rankingArea );
+  connect( rankingArea, SIGNAL( ranked( int ) ), SLOT( slotRanked( int ) ) );
 
   topLayout->addStretch( 1 );
 }
+
+void Ranker::slotRanked( int ranking )
+{
+  qDebug() << "SLOT RANKED:" << ranking;
+}
+
