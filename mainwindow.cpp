@@ -75,10 +75,8 @@ bool MainWindow::saveAs()
 
 void MainWindow::about()
 {
-  QMessageBox::about(this, tr("About Application"),
-           tr("The <b>Application</b> example demonstrates how to "
-              "write modern GUI applications using Qt, with a menu bar, "
-              "toolbars, and a status bar."));
+  QMessageBox::about(this, tr("About Nostradamus"),
+           tr("Nostradamus written by Cornelius Schumacher <schumacher@kde.org>"));
 }
 
 void MainWindow::documentWasModified()
@@ -132,11 +130,13 @@ void MainWindow::createActions()
    pasteAct->setStatusTip(tr("Paste the clipboard's contents into the current "
                              "selection"));
    connect(pasteAct, SIGNAL(triggered()), textEdit, SLOT(paste()));
+*/
 
    aboutAct = new QAction(tr("&About"), this);
    aboutAct->setStatusTip(tr("Show the application's About box"));
    connect(aboutAct, SIGNAL(triggered()), this, SLOT(about()));
 
+/*
    aboutQtAct = new QAction(tr("About &Qt"), this);
    aboutQtAct->setStatusTip(tr("Show the Qt library's About box"));
    connect(aboutQtAct, SIGNAL(triggered()), qApp, SLOT(aboutQt()));
@@ -167,13 +167,12 @@ void MainWindow::createMenus()
    editMenu->addAction(cutAct);
    editMenu->addAction(copyAct);
    editMenu->addAction(pasteAct);
+*/
 
    menuBar()->addSeparator();
 
    helpMenu = menuBar()->addMenu(tr("&Help"));
    helpMenu->addAction(aboutAct);
-   helpMenu->addAction(aboutQtAct);
-*/
 }
 
 void MainWindow::createToolBars()
