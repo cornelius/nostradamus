@@ -9,6 +9,6 @@ INCLUDEPATH += .
 
 # Input
 HEADERS += mainwindow.h mainview.h choicesview.h ranker.h rankingarea.h \
-  criteriaview.h
+  criteriaview.h mainmodel.h
 SOURCES += main.cpp mainwindow.cpp mainview.cpp choicesview.cpp ranker.cpp \
-  rankingarea.cpp criteriaview.cpp
+  rankingarea.cpp criteriaview.cpp mainmodel.cpp

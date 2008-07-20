@@ -21,18 +21,21 @@
 #ifndef RANKER_H
 #define RANKER_H
 
+#include "mainmodel.h"
+
 #include <QtGui>
 
 class Ranker : public QWidget
 {
     Q_OBJECT
   public:
-    Ranker();
+    Ranker( MainModel *mainModel );
 
   protected slots:
     void slotRanked( int );
 
   private:
+    MainModel *m_mainModel;
 };
 
 #endif

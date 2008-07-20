@@ -18,38 +18,28 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef MAINVIEW_H
-#define MAINVIEW_H
+#ifndef MAINMODEL_H
+#define MAINMODEL_H
 
 #include <QtGui>
 
-class ChoicesView;
-class Ranker;
-class CriteriaView;
-class MainModel;
-
-class MainView : public QWidget
+class MainModel : public QWidget
 {
     Q_OBJECT
   public:
-    MainView();
+    MainModel();
 
     void save();
     void load();
 
-  protected slots:
-    void showChoices();
-    void showRanker();
-    void showCriteria();
+    QStandardItemModel *choicesModel() const;
+    QStandardItemModel *criteriaModel() const;
 
   private:
-    MainModel *m_mainModel;
-  
-    ChoicesView *m_choicesView;
-    Ranker *m_ranker;
-    CriteriaView *m_criteriaView;
-    
-    QStackedLayout *m_workAreaLayout;
+    QStandardItemModel *m_choicesModel;
+    QStandardItemModel *m_criteriaModel;
+
+    QString m_filename;
 };
 
 #endif

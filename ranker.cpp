@@ -23,7 +23,8 @@
 
 #include "rankingarea.h"
 
-Ranker::Ranker()
+Ranker::Ranker( MainModel *mainModel )
+  : m_mainModel( mainModel )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
