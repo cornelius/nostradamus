@@ -23,13 +23,11 @@
 
 #include <QtGui>
 
-ChoicesView::ChoicesView()
-  : m_filename("choices.xml")
+ChoicesView::ChoicesView( QStandardItemModel *model )
+  : m_model( model ), m_filename("choices.xml")
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
-  m_model = new QStandardItemModel;
-  
   QListView *listView = new QListView;
   topLayout->addWidget( listView );
   

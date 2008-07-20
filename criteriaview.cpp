@@ -23,13 +23,11 @@
 
 #include <QtGui>
 
-CriteriaView::CriteriaView()
-  : m_filename("criteria.xml")
+CriteriaView::CriteriaView( QStandardItemModel *model )
+  : m_model( model ), m_filename("criteria.xml")
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
-  m_model = new QStandardItemModel;
-  
   QListView *listView = new QListView;
   topLayout->addWidget( listView );
   

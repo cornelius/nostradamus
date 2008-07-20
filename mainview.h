@@ -42,6 +42,9 @@ class MainView : public QWidget
     void showCriteria();
 
   private:
+    QStandardItemModel *m_choicesModel;
+    QStandardItemModel *m_criteriaModel;
+  
     ChoicesView *m_choicesView;
     Ranker *m_ranker;
     CriteriaView *m_criteriaView;

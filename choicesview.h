@@ -27,7 +27,7 @@ class ChoicesView : public QWidget
 {
     Q_OBJECT
   public:
-    ChoicesView();
+    ChoicesView( QStandardItemModel * );
 
     void saveChoices();
     void loadChoices();

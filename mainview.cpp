@@ -27,6 +27,9 @@
 
 MainView::MainView()
 {
+  m_choicesModel = new QStandardItemModel;
+  m_criteriaModel = new QStandardItemModel;
+
   QBoxLayout *topLayout = new QHBoxLayout;
   setLayout( topLayout );
 
@@ -50,10 +53,10 @@ MainView::MainView()
   m_workAreaLayout = new QStackedLayout;
   topLayout->addLayout( m_workAreaLayout );
 
-  m_choicesView = new ChoicesView;
+  m_choicesView = new ChoicesView( m_choicesModel );
   m_workAreaLayout->addWidget( m_choicesView );
 
-  m_criteriaView = new CriteriaView;
+  m_criteriaView = new CriteriaView( m_criteriaModel );
   m_workAreaLayout->addWidget( m_criteriaView );
 
   m_ranker = new Ranker;

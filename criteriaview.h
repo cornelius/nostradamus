@@ -27,7 +27,7 @@ class CriteriaView : public QWidget
 {
     Q_OBJECT
   public:
-    CriteriaView();
+    CriteriaView( QStandardItemModel * );
 
     void saveCriteria();
     void loadCriteria();
