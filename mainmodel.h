@@ -21,6 +21,8 @@
 #ifndef MAINMODEL_H
 #define MAINMODEL_H
 
+#include "choice.h"
+
 #include <QtGui>
 
 class MainModel : public QWidget
@@ -36,6 +38,13 @@ class MainModel : public QWidget
     QStandardItemModel *criteriaModel() const;
 
     QString firstQuestion() const;
+
+    Choice::Pair randomPair();
+
+    int randomNumber( int max );
+
+  protected:
+    QString randomChoice();
 
   private:
     QStandardItemModel *m_choicesModel;

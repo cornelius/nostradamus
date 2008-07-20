@@ -18,33 +18,15 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef RANKER_H
-#define RANKER_H
+#ifndef CHOICE_H
+#define CHOICE_H
 
-#include "mainmodel.h"
+#include <QPair>
 
-#include <QtGui>
-
-class Ranker : public QWidget
+class Choice
 {
-    Q_OBJECT
   public:
-    Ranker( MainModel *mainModel );
-
-    void startRanking();
-
-  protected slots:
-    void slotRanked( int );
-
-  protected:
-    void newComparison();
-
-  private:
-    MainModel *m_mainModel;
-
-    QLabel *m_questionLabel;
-    QLabel *m_leftLabel;
-    QLabel *m_rightLabel;
+    typedef QPair<QString,QString> Pair;
 };
 
 #endif

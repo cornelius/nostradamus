@@ -116,3 +116,26 @@ QString MainModel::firstQuestion() const
     return m_criteriaModel->item( 0 )->text();
   }
 }
+
+Choice::Pair MainModel::randomPair()
+{
+  QString left = randomChoice();
+
+  QString right;
+  do {
+    right = randomChoice();
+  } while ( left == right );
+  
+  return qMakePair( left, right );
+}
+
+QString MainModel::randomChoice()
+{
+  int index = randomNumber( m_choicesModel->rowCount() - 1 );
+  return m_choicesModel->item( index )->text();
+}
+
+int MainModel::randomNumber( int max )
+{
+  return ( max + 1 ) * ( rand() / ( RAND_MAX + 1.0 ) );
+}

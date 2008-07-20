@@ -36,13 +36,13 @@ Ranker::Ranker( MainModel *mainModel )
   QBoxLayout *choicesLayout = new QHBoxLayout;
   topLayout->addLayout( choicesLayout );
 
-  QLabel *label = new QLabel( "Left" );
-  choicesLayout->addWidget( label );
+  m_leftLabel = new QLabel( "Left" );
+  choicesLayout->addWidget( m_leftLabel );
 
   choicesLayout->addStretch( 1 );
 
-  label = new QLabel( "Right" );
-  choicesLayout->addWidget( label );
+  m_rightLabel = new QLabel( "Right" );
+  choicesLayout->addWidget( m_rightLabel );
 
   QFrame *rankingArea = new RankingArea;
   topLayout->addWidget( rankingArea );
@@ -54,9 +54,21 @@ Ranker::Ranker( MainModel *mainModel )
 void Ranker::startRanking()
 {
   m_questionLabel->setText( m_mainModel->firstQuestion() );
+
+  newComparison();
+}
+
+void Ranker::newComparison()
+{
+  Choice::Pair pair = m_mainModel->randomPair();
+
+  m_leftLabel->setText( pair.first );
+  m_rightLabel->setText( pair.second );
 }
 
 void Ranker::slotRanked( int ranking )
 {
   qDebug() << "SLOT RANKED:" << ranking;
+
+  newComparison();
 }
