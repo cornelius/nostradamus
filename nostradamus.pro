@@ -8,6 +8,7 @@ DEPENDPATH += .
 INCLUDEPATH += .
 
 # Input
-HEADERS += mainwindow.h mainview.h choicesview.h ranker.h rankingarea.h
+HEADERS += mainwindow.h mainview.h choicesview.h ranker.h rankingarea.h \
+  criteriaview.h
 SOURCES += main.cpp mainwindow.cpp mainview.cpp choicesview.cpp ranker.cpp \
-  rankingarea.cpp
+  rankingarea.cpp criteriaview.cpp

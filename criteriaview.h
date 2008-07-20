@@ -18,35 +18,29 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef MAINVIEW_H
-#define MAINVIEW_H
+#ifndef CRITERIAVIEW_H
+#define CRITERIAVIEW_H
 
 #include <QtGui>
 
-class ChoicesView;
-class Ranker;
-class CriteriaView;
-
-class MainView : public QWidget
+class CriteriaView : public QWidget
 {
     Q_OBJECT
   public:
-    MainView();
+    CriteriaView();
 
-    void save();
-    void load();
+    void saveCriteria();
+    void loadCriteria();
 
   protected slots:
-    void showChoices();
-    void showRanker();
-    void showCriteria();
+    void newCriterion();
 
   private:
-    ChoicesView *m_choicesView;
-    Ranker *m_ranker;
-    CriteriaView *m_criteriaView;
-    
-    QStackedLayout *m_workAreaLayout;
+    QStandardItemModel *m_model; 
+
+    QLineEdit *m_newCriterionEdit;
+
+    QString m_filename;
 };
 
 #endif

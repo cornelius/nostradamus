@@ -23,6 +23,7 @@
 
 #include "choicesview.h"
 #include "ranker.h"
+#include "criteriaview.h"
 
 MainView::MainView()
 {
@@ -36,6 +37,10 @@ MainView::MainView()
   navLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( showChoices() ) );
   
+  button = new QPushButton( "Criteria" );
+  navLayout->addWidget( button );
+  connect( button, SIGNAL( clicked() ), SLOT( showCriteria() ) );
+
   button = new QPushButton( "Rank" );
   navLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( showRanker() ) );
@@ -48,6 +53,9 @@ MainView::MainView()
   m_choicesView = new ChoicesView;
   m_workAreaLayout->addWidget( m_choicesView );
 
+  m_criteriaView = new CriteriaView;
+  m_workAreaLayout->addWidget( m_criteriaView );
+
   m_ranker = new Ranker;
   m_workAreaLayout->addWidget( m_ranker );
 }
@@ -55,11 +63,13 @@ MainView::MainView()
 void MainView::load()
 {
   m_choicesView->loadChoices();
+  m_criteriaView->loadCriteria();
 }
 
 void MainView::save()
 {
   m_choicesView->saveChoices();
+  m_criteriaView->saveCriteria();
 }
 
 void MainView::showChoices()
@@ -71,3 +81,9 @@ void MainView::showRanker()
 {
   m_workAreaLayout->setCurrentWidget( m_ranker );
 }
+
+void MainView::showCriteria()
+{
+  m_workAreaLayout->setCurrentWidget( m_criteriaView );
+}
+
