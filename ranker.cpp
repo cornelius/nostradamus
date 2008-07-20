@@ -68,7 +68,15 @@ void Ranker::newComparison()
 
 void Ranker::slotRanked( int ranking )
 {
-  qDebug() << "SLOT RANKED:" << ranking;
+  Comparison c;
+  c.setLeft( m_leftLabel->text() );
+  c.setRight( m_rightLabel->text() );
+  
+  c.setRanking( ranking );
+
+  c.setUpdatedAt( QDateTime::currentDateTime() );
+
+  m_mainModel->addComparison( c );
 
   newComparison();
 }

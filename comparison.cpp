@@ -18,44 +18,49 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef MAINMODEL_H
-#define MAINMODEL_H
 
-#include "choice.h"
 #include "comparison.h"
 
-#include <QtGui>
-
-class MainModel : public QWidget
+Comparison::Comparison()
 {
-    Q_OBJECT
-  public:
-    MainModel();
+}
 
-    void save();
-    void load();
+void Comparison::setLeft( const QString &left )
+{
+  m_left = left;
+}
 
-    QStandardItemModel *choicesModel() const;
-    QStandardItemModel *criteriaModel() const;
+QString Comparison::left() const
+{
+  return m_left;
+}
 
-    QString firstQuestion() const;
+void Comparison::setRight( const QString &right )
+{
+  m_right = right;
+}
 
-    Choice::Pair randomPair();
+QString Comparison::right() const
+{
+  return m_right;
+}
 
-    int randomNumber( int max );
+void Comparison::setRanking( int ranking )
+{
+  m_ranking = ranking;
+}
 
-    void addComparison( const Comparison & );
+int Comparison::ranking() const
+{
+  return m_ranking;
+}
 
-  protected:
-    QString randomChoice();
+void Comparison::setUpdatedAt( const QDateTime &dt )
+{
+  m_updatedAt = dt;
+}
 
-  private:
-    QStandardItemModel *m_choicesModel;
-    QStandardItemModel *m_criteriaModel;
-
-    Comparison::List m_comparisons;
-
-    QString m_filename;
-};
-
-#endif
+QDateTime Comparison::updatedAt() const
+{
+  return m_updatedAt;
+}

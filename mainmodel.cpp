@@ -69,6 +69,31 @@ void MainModel::load()
       QStandardItem *item = new QStandardItem( xml.readElementText() );
       m_criteriaModel->appendRow( item );
     }
+    
+    if ( xml.isStartElement() && xml.name() == "comparison" ) {
+
+      Comparison c;  
+      
+      while( !xml.atEnd() ) {
+        xml.readNext();
+        
+        if ( xml.isEndElement() && xml.name() == "comparison" ) break;
+
+        if ( xml.isStartElement() ) {
+          if ( xml.name() == "left" ) {
+            c.setLeft( xml.readElementText() );
+          } else if ( xml.name() == "right" ) {
+            c.setRight( xml.readElementText() );
+          } else if ( xml.name() == "ranking" ) {
+            c.setRanking( xml.readElementText().toInt() );
+          } else if ( xml.name() == "updated_at" ) {
+            c.setUpdatedAt( QDateTime::fromString( xml.readElementText() ) );
+          }
+        }
+      }
+      
+      addComparison( c );
+    }
   }
 
   if ( xml.hasError() ) {
@@ -102,6 +127,17 @@ void MainModel::save()
   xml.writeStartElement( "criteria" );
   for( int i = 0; i < m_criteriaModel->rowCount(); ++i ) {
     xml.writeTextElement( "criterion", m_criteriaModel->item( i )->text() );
+  }
+  xml.writeEndElement();
+
+  xml.writeStartElement( "comparisons" );
+  foreach( Comparison c, m_comparisons ) {
+    xml.writeStartElement( "comparison" );
+    xml.writeTextElement( "left", c.left() );
+    xml.writeTextElement( "right", c.right() );
+    xml.writeTextElement( "ranking", QString::number( c.ranking() ) );
+    xml.writeTextElement( "updated_at", c.updatedAt().toString() );
+    xml.writeEndElement();
   }
   xml.writeEndElement();
   
@@ -138,4 +174,9 @@ QString MainModel::randomChoice()
 int MainModel::randomNumber( int max )
 {
   return ( max + 1 ) * ( rand() / ( RAND_MAX + 1.0 ) );
+}
+
+void MainModel::addComparison( const Comparison &comparison )
+{
+  m_comparisons.append( comparison );
 }

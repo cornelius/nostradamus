@@ -18,44 +18,40 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef MAINMODEL_H
-#define MAINMODEL_H
+#ifndef COMPARISON_H
+#define COMPARISON_H
 
-#include "choice.h"
-#include "comparison.h"
+#include <QPair>
+#include <QList>
+#include <QString>
+#include <QDateTime>
 
-#include <QtGui>
-
-class MainModel : public QWidget
+class Comparison
 {
-    Q_OBJECT
   public:
-    MainModel();
+    typedef QList<Comparison> List;
+  
+    Comparison();
+    
+    void setLeft( const QString & );
+    QString left() const;
 
-    void save();
-    void load();
+    void setRight( const QString & );
+    QString right() const;
 
-    QStandardItemModel *choicesModel() const;
-    QStandardItemModel *criteriaModel() const;
+    void setRanking( int );
+    int ranking() const;
 
-    QString firstQuestion() const;
-
-    Choice::Pair randomPair();
-
-    int randomNumber( int max );
-
-    void addComparison( const Comparison & );
-
-  protected:
-    QString randomChoice();
-
+    void setUpdatedAt( const QDateTime & );
+    QDateTime updatedAt() const;
+    
   private:
-    QStandardItemModel *m_choicesModel;
-    QStandardItemModel *m_criteriaModel;
+    QString m_left;
+    QString m_right;
+    
+    int m_ranking;
 
-    Comparison::List m_comparisons;
-
-    QString m_filename;
+    QDateTime m_updatedAt;
 };
 
 #endif
