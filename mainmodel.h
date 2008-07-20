@@ -35,6 +35,8 @@ class MainModel : public QWidget
     QStandardItemModel *choicesModel() const;
     QStandardItemModel *criteriaModel() const;
 
+    QString firstQuestion() const;
+
   private:
     QStandardItemModel *m_choicesModel;
     QStandardItemModel *m_criteriaModel;

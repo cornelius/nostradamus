@@ -31,11 +31,15 @@ class Ranker : public QWidget
   public:
     Ranker( MainModel *mainModel );
 
+    void startRanking();
+
   protected slots:
     void slotRanked( int );
 
   private:
     MainModel *m_mainModel;
+
+    QLabel *m_questionLabel;
 };
 
 #endif

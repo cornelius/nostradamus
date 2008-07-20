@@ -108,3 +108,11 @@ void MainModel::save()
   xml.writeEndDocument();
 }
 
+QString MainModel::firstQuestion() const
+{
+  if ( m_criteriaModel->rowCount() < 1 ) {
+    return QString();
+  } else {
+    return m_criteriaModel->item( 0 )->text();
+  }
+}

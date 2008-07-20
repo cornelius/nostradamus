@@ -81,6 +81,7 @@ void MainView::showChoices()
 void MainView::showRanker()
 {
   m_workAreaLayout->setCurrentWidget( m_ranker );
+  m_ranker->startRanking();
 }
 
 void MainView::showCriteria()

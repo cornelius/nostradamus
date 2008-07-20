@@ -30,6 +30,9 @@ Ranker::Ranker( MainModel *mainModel )
 
   topLayout->addStretch( 1 );
 
+  m_questionLabel = new QLabel;
+  topLayout->addWidget( m_questionLabel );
+
   QBoxLayout *choicesLayout = new QHBoxLayout;
   topLayout->addLayout( choicesLayout );
 
@@ -48,8 +51,12 @@ Ranker::Ranker( MainModel *mainModel )
   topLayout->addStretch( 1 );
 }
 
+void Ranker::startRanking()
+{
+  m_questionLabel->setText( m_mainModel->firstQuestion() );
+}
+
 void Ranker::slotRanked( int ranking )
 {
   qDebug() << "SLOT RANKED:" << ranking;
 }
-
