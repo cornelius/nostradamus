@@ -85,7 +85,7 @@ QVariant ResultModel::headerData(int section, Qt::Orientation orientation,
   }
   
   if ( orientation == Qt::Vertical ) {
-    return section + 1;
+    return QVariant();
   } else {
     switch ( section ) {
       case 0:

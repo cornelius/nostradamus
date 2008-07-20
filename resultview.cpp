@@ -30,6 +30,12 @@ ResultView::ResultView( ResultModel *model )
 
   QTableView *listView = new QTableView;
   topLayout->addWidget( listView );
-  
-  listView->setModel( m_model );
+
+  QSortFilterProxyModel *proxyModel = new QSortFilterProxyModel(this);
+
+  proxyModel->setSourceModel( m_model );
+           
+  listView->setModel( proxyModel );
+
+  proxyModel->sort( 3, Qt::DescendingOrder );
 }
