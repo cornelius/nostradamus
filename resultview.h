@@ -18,50 +18,21 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef MAINMODEL_H
-#define MAINMODEL_H
-
-#include "choice.h"
-#include "comparison.h"
+#ifndef RESULTVIEW_H
+#define RESULTVIEW_H
 
 #include <QtGui>
 
 class ResultModel;
 
-class MainModel : public QWidget
+class ResultView : public QWidget
 {
     Q_OBJECT
   public:
-    MainModel();
-
-    void save();
-    void load();
-
-    QStandardItemModel *choicesModel() const;
-    QStandardItemModel *criteriaModel() const;
-    ResultModel *resultModel() const;
-
-    QString firstQuestion() const;
-
-    Choice::Pair randomPair();
-
-    int randomNumber( int max );
-
-    void addComparison( const Comparison & );
-
-    void calculateResult();
-
-  protected:
-    QString randomChoice();
+    ResultView( ResultModel * );
 
   private:
-    QStandardItemModel *m_choicesModel;
-    QStandardItemModel *m_criteriaModel;
-    ResultModel *m_resultModel;
-
-    Comparison::List m_comparisons;
-
-    QString m_filename;
+    ResultModel *m_model; 
 };
 
 #endif

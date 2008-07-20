@@ -21,8 +21,6 @@
 
 #include "criteriaview.h"
 
-#include <QtGui>
-
 CriteriaView::CriteriaView( QStandardItemModel *model )
   : m_model( model )
 {

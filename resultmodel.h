@@ -18,50 +18,33 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef MAINMODEL_H
-#define MAINMODEL_H
-
-#include "choice.h"
-#include "comparison.h"
+#ifndef RESULTMODEL_H
+#define RESULTMODEL_H
 
 #include <QtGui>
 
-class ResultModel;
-
-class MainModel : public QWidget
+class ResultModel : public QAbstractTableModel
 {
     Q_OBJECT
   public:
-    MainModel();
+    ResultModel( QObject *parent = 0 );
 
-    void save();
-    void load();
+    void clear();
+    void sync();
 
-    QStandardItemModel *choicesModel() const;
-    QStandardItemModel *criteriaModel() const;
-    ResultModel *resultModel() const;
+    void addResult( const QString &choice, int ranking );
 
-    QString firstQuestion() const;
-
-    Choice::Pair randomPair();
-
-    int randomNumber( int max );
-
-    void addComparison( const Comparison & );
-
-    void calculateResult();
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role) const;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const;
 
   protected:
-    QString randomChoice();
 
   private:
-    QStandardItemModel *m_choicesModel;
-    QStandardItemModel *m_criteriaModel;
-    ResultModel *m_resultModel;
-
-    Comparison::List m_comparisons;
-
-    QString m_filename;
+    QMap<QString,int> m_results;
+    QMap<QString,int> m_resultCounts;
 };
 
 #endif

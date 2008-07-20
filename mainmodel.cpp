@@ -21,13 +21,14 @@
 
 #include "mainmodel.h"
 
-#include "rankingarea.h"
+#include "resultmodel.h"
 
 MainModel::MainModel()
   : m_filename( "ranking.xml" )
 {
   m_choicesModel = new QStandardItemModel;
   m_criteriaModel = new QStandardItemModel;
+  m_resultModel = new ResultModel;
 }
 
 QStandardItemModel *MainModel::choicesModel() const
@@ -38,6 +39,11 @@ QStandardItemModel *MainModel::choicesModel() const
 QStandardItemModel *MainModel::criteriaModel() const
 {
   return m_criteriaModel;
+}
+
+ResultModel *MainModel::resultModel() const
+{
+  return m_resultModel;
 }
 
 void MainModel::load()
@@ -179,4 +185,16 @@ int MainModel::randomNumber( int max )
 void MainModel::addComparison( const Comparison &comparison )
 {
   m_comparisons.append( comparison );
+}
+
+void MainModel::calculateResult()
+{
+  m_resultModel->clear();
+  
+  foreach( Comparison c, m_comparisons ) {
+    m_resultModel->addResult( c.left(), -c.ranking() );
+    m_resultModel->addResult( c.right(), c.ranking() );
+  }
+
+  m_resultModel->sync();
 }

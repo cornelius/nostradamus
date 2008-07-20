@@ -25,6 +25,7 @@
 #include "choicesview.h"
 #include "ranker.h"
 #include "criteriaview.h"
+#include "resultview.h"
 
 MainView::MainView()
 {
@@ -48,6 +49,10 @@ MainView::MainView()
   navLayout->addWidget( button );
   connect( button, SIGNAL( clicked() ), SLOT( showRanker() ) );
 
+  button = new QPushButton( "Result" );
+  navLayout->addWidget( button );
+  connect( button, SIGNAL( clicked() ), SLOT( showResult() ) );
+
   navLayout->addStretch( 1 );
 
   m_workAreaLayout = new QStackedLayout;
@@ -61,6 +66,9 @@ MainView::MainView()
 
   m_ranker = new Ranker( m_mainModel );
   m_workAreaLayout->addWidget( m_ranker );
+
+  m_resultView = new ResultView( m_mainModel->resultModel() );
+  m_workAreaLayout->addWidget( m_resultView );
 }
 
 void MainView::load()
@@ -89,3 +97,8 @@ void MainView::showCriteria()
   m_workAreaLayout->setCurrentWidget( m_criteriaView );
 }
 
+void MainView::showResult()
+{
+  m_workAreaLayout->setCurrentWidget( m_resultView );
+  m_mainModel->calculateResult();
+}

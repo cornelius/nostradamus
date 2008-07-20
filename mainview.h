@@ -26,6 +26,7 @@
 class ChoicesView;
 class Ranker;
 class CriteriaView;
+class ResultView;
 class MainModel;
 
 class MainView : public QWidget
@@ -41,6 +42,7 @@ class MainView : public QWidget
     void showChoices();
     void showRanker();
     void showCriteria();
+    void showResult();
 
   private:
     MainModel *m_mainModel;
@@ -48,6 +50,7 @@ class MainView : public QWidget
     ChoicesView *m_choicesView;
     Ranker *m_ranker;
     CriteriaView *m_criteriaView;
+    ResultView *m_resultView;
     
     QStackedLayout *m_workAreaLayout;
 };
