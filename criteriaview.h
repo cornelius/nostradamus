@@ -29,9 +29,6 @@ class CriteriaView : public QWidget
   public:
     CriteriaView( QStandardItemModel * );
 
-    void saveCriteria();
-    void loadCriteria();
-
   protected slots:
     void newCriterion();
 
@@ -39,8 +36,6 @@ class CriteriaView : public QWidget
     QStandardItemModel *m_model; 
 
     QLineEdit *m_newCriterionEdit;
-
-    QString m_filename;
 };
 
 #endif

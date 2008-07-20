@@ -24,7 +24,7 @@
 #include <QtGui>
 
 ChoicesView::ChoicesView( QStandardItemModel *model )
-  : m_model( model ), m_filename("choices.xml")
+  : m_model( model )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
@@ -44,59 +44,4 @@ void ChoicesView::newChoice()
   m_model->appendRow( item );
 
   m_newChoiceEdit->setText( QString() );
-}
-
-void ChoicesView::saveChoices()
-{
-  QFile file( m_filename );
-  if ( !file.open( QIODevice::WriteOnly ) ) {
-    QMessageBox::critical( this, tr("Error"),
-      tr("Unable to open file '%1' for writing.").arg( m_filename ) );
-    return;
-  }
-
-  QXmlStreamWriter xml( &file );
-  xml.setAutoFormatting( true );
-  
-  xml.writeStartDocument();
-
-  xml.writeStartElement( "choices" );
-
-  for( int i = 0; i < m_model->rowCount(); ++i ) {
-    xml.writeTextElement( "choice", m_model->item( i )->text() );
-  }
-  
-  xml.writeEndDocument();
-}
-
-void ChoicesView::loadChoices()
-{
-  if ( !QFile::exists( m_filename ) ) {
-    QMessageBox::information( this, tr("Information"),
-      tr("Starting with new file.") );
-    return;
-  }
-
-  QFile file( m_filename );
-  if ( !file.open( QIODevice::ReadOnly ) ) {
-    QMessageBox::critical( this, tr("Error"),
-      tr("Unable to open file '%1' for reading.").arg( m_filename ) );
-    return;
-  }
-
-  QXmlStreamReader xml( &file );
-
-  while ( !xml.atEnd() ) {
-    xml.readNext();
-
-    if ( xml.isStartElement() && xml.name() == "choice" ) {
-      QStandardItem *item = new QStandardItem( xml.readElementText() );
-      m_model->appendRow( item );
-    }
-  }
-
-  if ( xml.hasError() ) {
-    QMessageBox::critical( this, tr("Error"),
-      tr("Error parsing XML.") );
-  }
 }

@@ -44,6 +44,8 @@ class MainView : public QWidget
   private:
     QStandardItemModel *m_choicesModel;
     QStandardItemModel *m_criteriaModel;
+
+    QString m_filename;
   
     ChoicesView *m_choicesView;
     Ranker *m_ranker;

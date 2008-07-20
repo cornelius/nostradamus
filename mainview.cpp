@@ -26,6 +26,7 @@
 #include "criteriaview.h"
 
 MainView::MainView()
+  : m_filename( "ranking.xml" )
 {
   m_choicesModel = new QStandardItemModel;
   m_criteriaModel = new QStandardItemModel;
@@ -65,14 +66,70 @@ MainView::MainView()
 
 void MainView::load()
 {
-  m_choicesView->loadChoices();
-  m_criteriaView->loadCriteria();
+  if ( !QFile::exists( m_filename ) ) {
+    QMessageBox::information( this, tr("Information"),
+      tr("Starting with new file.") );
+    return;
+  }
+
+  QFile file( m_filename );
+  if ( !file.open( QIODevice::ReadOnly ) ) {
+    QMessageBox::critical( this, tr("Error"),
+      tr("Unable to open file '%1' for reading.").arg( m_filename ) );
+    return;
+  }
+
+  QXmlStreamReader xml( &file );
+
+  while ( !xml.atEnd() ) {
+    xml.readNext();
+
+    if ( xml.isStartElement() && xml.name() == "choice" ) {
+      QStandardItem *item = new QStandardItem( xml.readElementText() );
+      m_choicesModel->appendRow( item );
+    }
+
+    if ( xml.isStartElement() && xml.name() == "criterion" ) {
+      QStandardItem *item = new QStandardItem( xml.readElementText() );
+      m_criteriaModel->appendRow( item );
+    }
+  }
+
+  if ( xml.hasError() ) {
+    QMessageBox::critical( this, tr("Error"),
+      tr("Error parsing XML.") );
+  }
 }
 
 void MainView::save()
 {
-  m_choicesView->saveChoices();
-  m_criteriaView->saveCriteria();
+  QFile file( m_filename );
+  if ( !file.open( QIODevice::WriteOnly ) ) {
+    QMessageBox::critical( this, tr("Error"),
+      tr("Unable to open file '%1' for writing.").arg( m_filename ) );
+    return;
+  }
+
+  QXmlStreamWriter xml( &file );
+  xml.setAutoFormatting( true );
+  
+  xml.writeStartDocument();
+
+  xml.writeStartElement( "ranking" );
+
+  xml.writeStartElement( "choices" );
+  for( int i = 0; i < m_choicesModel->rowCount(); ++i ) {
+    xml.writeTextElement( "choice", m_choicesModel->item( i )->text() );
+  }
+  xml.writeEndElement();
+  
+  xml.writeStartElement( "criteria" );
+  for( int i = 0; i < m_criteriaModel->rowCount(); ++i ) {
+    xml.writeTextElement( "criterion", m_criteriaModel->item( i )->text() );
+  }
+  xml.writeEndElement();
+  
+  xml.writeEndDocument();
 }
 
 void MainView::showChoices()
