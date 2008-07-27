@@ -31,11 +31,13 @@ class ChoicesView : public QWidget
 
   protected slots:
     void newChoice();
-
+    void checkNewButton();
+    
   private:
     QStandardItemModel *m_model; 
 
     QLineEdit *m_newChoiceEdit;
+    QPushButton *m_newButton;
 };
 
 #endif

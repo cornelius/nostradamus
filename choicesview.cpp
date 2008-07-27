@@ -33,9 +33,19 @@ ChoicesView::ChoicesView( QStandardItemModel *model )
   
   listView->setModel( m_model );
 
+  QBoxLayout *newLayout = new QHBoxLayout;
+  topLayout->addLayout( newLayout );
+
   m_newChoiceEdit = new QLineEdit;
-  topLayout->addWidget( m_newChoiceEdit );
+  newLayout->addWidget( m_newChoiceEdit );
   connect( m_newChoiceEdit, SIGNAL( returnPressed() ), SLOT( newChoice() ) );
+  connect( m_newChoiceEdit, SIGNAL( textChanged( const QString & ) ),
+    SLOT( checkNewButton() ) );
+
+  m_newButton = new QPushButton( "Add New Choice");
+  newLayout->addWidget( m_newButton );
+  connect( m_newButton, SIGNAL( clicked() ), SLOT( newChoice() ) );
+  checkNewButton();
 }
 
 void ChoicesView::newChoice()
@@ -44,4 +54,9 @@ void ChoicesView::newChoice()
   m_model->appendRow( item );
 
   m_newChoiceEdit->setText( QString() );
+}
+
+void ChoicesView::checkNewButton()
+{
+  m_newButton->setEnabled( !m_newChoiceEdit->text().isEmpty() );
 }
