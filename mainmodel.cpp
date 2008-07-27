@@ -150,7 +150,7 @@ void MainModel::save()
   xml.writeEndDocument();
 }
 
-QString MainModel::firstQuestion() const
+QString MainModel::firstCriterion() const
 {
   if ( m_criteriaModel->rowCount() < 1 ) {
     return QString();
@@ -197,4 +197,9 @@ void MainModel::calculateResult()
   }
 
   m_resultModel->sync();
+}
+
+int MainModel::criteriaCount() const
+{
+  return m_criteriaModel->rowCount();
 }

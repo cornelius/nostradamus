@@ -24,8 +24,9 @@
 #include <QtGui>
 
 class ChoicesView;
-class Ranker;
 class CriteriaView;
+class CriteriaChooser;
+class Ranker;
 class ResultView;
 class MainModel;
 
@@ -44,12 +45,15 @@ class MainView : public QWidget
     void showCriteria();
     void showResult();
 
+    void setRankingCriterion( const QString &criterion );
+    
   private:
     MainModel *m_mainModel;
   
     ChoicesView *m_choicesView;
-    Ranker *m_ranker;
     CriteriaView *m_criteriaView;
+    CriteriaChooser *m_criteriaChooser;
+    Ranker *m_ranker;
     ResultView *m_resultView;
     
     QStackedLayout *m_workAreaLayout;

@@ -51,9 +51,9 @@ Ranker::Ranker( MainModel *mainModel )
   topLayout->addStretch( 1 );
 }
 
-void Ranker::startRanking()
+void Ranker::startRanking( const QString &criterion )
 {
-  m_questionLabel->setText( m_mainModel->firstQuestion() );
+  m_questionLabel->setText( criterion );
 
   newComparison();
 }

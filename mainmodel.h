@@ -41,7 +41,7 @@ class MainModel : public QWidget
     QStandardItemModel *criteriaModel() const;
     ResultModel *resultModel() const;
 
-    QString firstQuestion() const;
+    QString firstCriterion() const;
 
     Choice::Pair randomPair();
 
@@ -50,6 +50,8 @@ class MainModel : public QWidget
     void addComparison( const Comparison & );
 
     void calculateResult();
+
+    int criteriaCount() const;
 
   protected:
     QString randomChoice();

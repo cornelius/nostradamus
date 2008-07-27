@@ -18,33 +18,25 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef RANKER_H
-#define RANKER_H
-
-#include "mainmodel.h"
+#ifndef CRITERIACHOOSER_H
+#define CRITERIACHOOSER_H
 
 #include <QtGui>
 
-class Ranker : public QWidget
+class CriteriaChooser : public QWidget
 {
     Q_OBJECT
   public:
-    Ranker( MainModel *mainModel );
+    CriteriaChooser( QStandardItemModel * );
 
-    void startRanking( const QString &criterion );
+  signals:
+    void itemChosen( const QString & );
 
   protected slots:
-    void slotRanked( int );
-
-  protected:
-    void newComparison();
-
+    void chooseItem( const QModelIndex & );
+    
   private:
-    MainModel *m_mainModel;
-
-    QLabel *m_questionLabel;
-    QLabel *m_leftLabel;
-    QLabel *m_rightLabel;
+    QStandardItemModel *m_model;
 };
 
 #endif

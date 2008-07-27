@@ -26,6 +26,7 @@
 #include "ranker.h"
 #include "criteriaview.h"
 #include "resultview.h"
+#include "criteriachooser.h"
 
 MainView::MainView()
 {
@@ -64,6 +65,11 @@ MainView::MainView()
   m_criteriaView = new CriteriaView( m_mainModel->criteriaModel() );
   m_workAreaLayout->addWidget( m_criteriaView );
 
+  m_criteriaChooser = new CriteriaChooser( m_mainModel->criteriaModel() );
+  m_workAreaLayout->addWidget( m_criteriaChooser );
+  connect( m_criteriaChooser, SIGNAL( itemChosen( const QString & ) ),
+    SLOT( setRankingCriterion( const QString & ) ) );
+
   m_ranker = new Ranker( m_mainModel );
   m_workAreaLayout->addWidget( m_ranker );
 
@@ -86,19 +92,29 @@ void MainView::showChoices()
   m_workAreaLayout->setCurrentWidget( m_choicesView );
 }
 
-void MainView::showRanker()
-{
-  m_workAreaLayout->setCurrentWidget( m_ranker );
-  m_ranker->startRanking();
-}
-
 void MainView::showCriteria()
 {
   m_workAreaLayout->setCurrentWidget( m_criteriaView );
+}
+
+void MainView::showRanker()
+{
+  if ( m_mainModel->criteriaCount() > 1 ) {
+    m_workAreaLayout->setCurrentWidget( m_criteriaChooser );
+  } else {
+    m_workAreaLayout->setCurrentWidget( m_ranker );
+    m_ranker->startRanking( m_mainModel->firstCriterion() );
+  }
 }
 
 void MainView::showResult()
 {
   m_workAreaLayout->setCurrentWidget( m_resultView );
   m_mainModel->calculateResult();
+}
+
+void MainView::setRankingCriterion( const QString &criterion )
+{
+  m_workAreaLayout->setCurrentWidget( m_ranker );
+  m_ranker->startRanking( criterion );
 }
