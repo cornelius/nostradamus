@@ -42,7 +42,7 @@ CriteriaView::CriteriaView( QStandardItemModel *model )
 
   m_newButton = new QPushButton( "Add New Choice");
   newLayout->addWidget( m_newButton );
-  connect( m_newButton, SIGNAL( clicked() ), SLOT( newChoice() ) );
+  connect( m_newButton, SIGNAL( clicked() ), SLOT( newCriterion() ) );
   checkNewButton();
 }
 
