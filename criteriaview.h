@@ -31,11 +31,13 @@ class CriteriaView : public QWidget
 
   protected slots:
     void newCriterion();
+    void checkNewButton();
 
   private:
     QStandardItemModel *m_model; 
 
     QLineEdit *m_newCriterionEdit;
+    QPushButton *m_newButton;
 };
 
 #endif

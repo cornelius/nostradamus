@@ -31,9 +31,19 @@ CriteriaView::CriteriaView( QStandardItemModel *model )
   
   listView->setModel( m_model );
 
+  QBoxLayout *newLayout = new QHBoxLayout;
+  topLayout->addLayout( newLayout );
+
   m_newCriterionEdit = new QLineEdit;
-  topLayout->addWidget( m_newCriterionEdit );
+  newLayout->addWidget( m_newCriterionEdit );
   connect( m_newCriterionEdit, SIGNAL( returnPressed() ), SLOT( newCriterion() ) );
+  connect( m_newCriterionEdit, SIGNAL( textChanged( const QString & ) ),
+    SLOT( checkNewButton() ) );
+
+  m_newButton = new QPushButton( "Add New Choice");
+  newLayout->addWidget( m_newButton );
+  connect( m_newButton, SIGNAL( clicked() ), SLOT( newChoice() ) );
+  checkNewButton();
 }
 
 void CriteriaView::newCriterion()
@@ -42,4 +52,9 @@ void CriteriaView::newCriterion()
   m_model->appendRow( item );
 
   m_newCriterionEdit->setText( QString() );
+}
+
+void CriteriaView::checkNewButton()
+{
+  m_newButton->setEnabled( !m_newCriterionEdit->text().isEmpty() );
 }
