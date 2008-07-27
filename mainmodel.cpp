@@ -86,7 +86,9 @@ void MainModel::load()
         if ( xml.isEndElement() && xml.name() == "comparison" ) break;
 
         if ( xml.isStartElement() ) {
-          if ( xml.name() == "left" ) {
+          if ( xml.name() == "criterion" ) {
+            c.setCriterion( xml.readElementText() );
+          } else if ( xml.name() == "left" ) {
             c.setLeft( xml.readElementText() );
           } else if ( xml.name() == "right" ) {
             c.setRight( xml.readElementText() );
@@ -139,6 +141,7 @@ void MainModel::save()
   xml.writeStartElement( "comparisons" );
   foreach( Comparison c, m_comparisons ) {
     xml.writeStartElement( "comparison" );
+    xml.writeTextElement( "criterion", c.criterion() );
     xml.writeTextElement( "left", c.left() );
     xml.writeTextElement( "right", c.right() );
     xml.writeTextElement( "ranking", QString::number( c.ranking() ) );

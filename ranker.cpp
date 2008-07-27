@@ -69,6 +69,9 @@ void Ranker::newComparison()
 void Ranker::slotRanked( int ranking )
 {
   Comparison c;
+  
+  c.setCriterion( m_questionLabel->text() );
+  
   c.setLeft( m_leftLabel->text() );
   c.setRight( m_rightLabel->text() );
   

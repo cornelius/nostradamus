@@ -32,6 +32,9 @@ class Comparison
     typedef QList<Comparison> List;
   
     Comparison();
+
+    void setCriterion( const QString & );
+    QString criterion() const;
     
     void setLeft( const QString & );
     QString left() const;
@@ -46,6 +49,8 @@ class Comparison
     QDateTime updatedAt() const;
     
   private:
+    QString m_criterion;
+  
     QString m_left;
     QString m_right;
     

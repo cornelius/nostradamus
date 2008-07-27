@@ -25,6 +25,16 @@ Comparison::Comparison()
 {
 }
 
+void Comparison::setCriterion( const QString &c )
+{
+  m_criterion = c;
+}
+
+QString Comparison::criterion() const
+{
+  return m_criterion;
+}
+
 void Comparison::setLeft( const QString &left )
 {
   m_left = left;
