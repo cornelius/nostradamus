@@ -27,6 +27,7 @@
 #include "criteriaview.h"
 #include "resultview.h"
 #include "criteriachooser.h"
+#include "firstcriterioninput.h"
 
 MainView::MainView()
 {
@@ -65,6 +66,12 @@ MainView::MainView()
   m_criteriaView = new CriteriaView( m_mainModel->criteriaModel() );
   m_workAreaLayout->addWidget( m_criteriaView );
 
+  m_firstCriterionInput = new FirstCriterionInput(
+    m_mainModel->criteriaModel() );
+  m_workAreaLayout->addWidget( m_firstCriterionInput );
+  connect( m_firstCriterionInput, SIGNAL( criterionEntered() ),
+    SLOT( showRanker() ) );
+
   m_criteriaChooser = new CriteriaChooser( m_mainModel->criteriaModel() );
   m_workAreaLayout->addWidget( m_criteriaChooser );
   connect( m_criteriaChooser, SIGNAL( itemChosen( const QString & ) ),
@@ -99,7 +106,9 @@ void MainView::showCriteria()
 
 void MainView::showRanker()
 {
-  if ( m_mainModel->criteriaCount() > 1 ) {
+  if ( m_mainModel->criteriaCount() == 0 ) {
+    m_workAreaLayout->setCurrentWidget( m_firstCriterionInput );
+  } else if ( m_mainModel->criteriaCount() > 1 ) {
     m_workAreaLayout->setCurrentWidget( m_criteriaChooser );
   } else {
     m_workAreaLayout->setCurrentWidget( m_ranker );

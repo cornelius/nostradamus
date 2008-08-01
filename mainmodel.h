@@ -51,6 +51,7 @@ class MainModel : public QWidget
 
     void calculateResult();
 
+    int choicesCount() const;
     int criteriaCount() const;
 
   protected:

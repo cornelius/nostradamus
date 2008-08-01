@@ -18,47 +18,29 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef MAINVIEW_H
-#define MAINVIEW_H
+#ifndef FIRSTCRITERIONINPUT_H
+#define FIRSTCRITERIONINPUT_H
 
 #include <QtGui>
 
-class ChoicesView;
-class CriteriaView;
-class FirstCriterionInput;
-class CriteriaChooser;
-class Ranker;
-class ResultView;
-class MainModel;
-
-class MainView : public QWidget
+class FirstCriterionInput : public QWidget
 {
     Q_OBJECT
   public:
-    MainView();
+    FirstCriterionInput( QStandardItemModel * );
 
-    void save();
-    void load();
+  signals:
+    void criterionEntered();
 
   protected slots:
-    void showChoices();
-    void showRanker();
-    void showCriteria();
-    void showResult();
+    void newCriterion();
+    void checkNewButton();
 
-    void setRankingCriterion( const QString &criterion );
-    
   private:
-    MainModel *m_mainModel;
-  
-    ChoicesView *m_choicesView;
-    CriteriaView *m_criteriaView;
-    FirstCriterionInput *m_firstCriterionInput;
-    CriteriaChooser *m_criteriaChooser;
-    Ranker *m_ranker;
-    ResultView *m_resultView;
-    
-    QStackedLayout *m_workAreaLayout;
+    QStandardItemModel *m_model; 
+
+    QLineEdit *m_newCriterionEdit;
+    QPushButton *m_newButton;
 };
 
 #endif
