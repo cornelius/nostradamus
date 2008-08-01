@@ -33,6 +33,9 @@ class Comparison
   
     Comparison();
     
+    void setMeta( bool );
+    bool meta() const;
+    
     void setLeft( const QString & );
     QString left() const;
 
@@ -46,6 +49,8 @@ class Comparison
     QDateTime updatedAt() const;
     
   private:
+    bool m_meta;
+  
     QString m_left;
     QString m_right;
     

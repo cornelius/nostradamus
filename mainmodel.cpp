@@ -93,6 +93,8 @@ void MainModel::load()
     if ( xml.isStartElement() && xml.name() == "comparison" ) {
 
       Comparison c;  
+
+      c.setMeta( xml.attributes().value( "meta" ) == "true" );
       
       while( !xml.atEnd() ) {
         xml.readNext();
@@ -153,10 +155,13 @@ void MainModel::save()
   xml.writeStartElement( "comparisons" );
   foreach( Comparison c, m_comparisons ) {
     xml.writeStartElement( "comparison" );
+    xml.writeAttribute( "meta", c.meta() ? "true" : "false" );
+
     xml.writeTextElement( "left", c.left() );
     xml.writeTextElement( "right", c.right() );
     xml.writeTextElement( "ranking", QString::number( c.ranking() ) );
     xml.writeTextElement( "updated_at", c.updatedAt().toString() );
+
     xml.writeEndElement();
   }
   xml.writeEndElement();
@@ -214,8 +219,10 @@ void MainModel::calculateResult()
   m_resultModel->clear();
   
   foreach( Comparison c, m_comparisons ) {
-    m_resultModel->addResult( c.left(), -c.ranking() );
-    m_resultModel->addResult( c.right(), c.ranking() );
+    if ( !c.meta() ) {
+      m_resultModel->addResult( c.left(), -c.ranking() );
+      m_resultModel->addResult( c.right(), c.ranking() );
+    }
   }
 
   m_resultModel->sync();

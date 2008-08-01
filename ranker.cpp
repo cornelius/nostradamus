@@ -71,6 +71,9 @@ void Ranker::newComparison()
 void Ranker::slotRanked( int ranking )
 {
   Comparison c;
+  
+  if ( m_choicesModel == m_mainModel->criteriaModel() ) c.setMeta( true );
+  
   c.setLeft( m_leftLabel->text() );
   c.setRight( m_rightLabel->text() );
   
