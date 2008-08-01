@@ -161,6 +161,10 @@ QString MainModel::firstCriterion() const
 
 Choice::Pair MainModel::randomPair()
 {
+  if ( m_criteriaModel->rowCount() < 2 ) {
+    return qMakePair( QString(), QString() );
+  }
+
   QString left = randomChoice();
 
   QString right;
@@ -173,6 +177,8 @@ Choice::Pair MainModel::randomPair()
 
 QString MainModel::randomChoice()
 {
+  if ( m_choicesModel->rowCount() == 0 ) return QString();
+
   int index = randomNumber( m_choicesModel->rowCount() - 1 );
   return m_choicesModel->item( index )->text();
 }
