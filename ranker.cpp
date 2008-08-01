@@ -31,6 +31,7 @@ Ranker::Ranker( MainModel *mainModel )
   topLayout->addStretch( 1 );
 
   m_questionLabel = new QLabel;
+  m_questionLabel->setAlignment( Qt::AlignHCenter );
   topLayout->addWidget( m_questionLabel );
 
   QBoxLayout *choicesLayout = new QHBoxLayout;
