@@ -43,7 +43,7 @@ class MainModel : public QWidget
 
     QString firstCriterion() const;
 
-    Choice::Pair randomPair();
+    Choice::Pair randomPair( QStandardItemModel * );
 
     int randomNumber( int max );
 
@@ -61,7 +61,7 @@ class MainModel : public QWidget
     void comparisonsCountChanged( int );
 
   protected:
-    QString randomChoice();
+    QString randomChoice( QStandardItemModel * );
 
   protected slots:
     void emitChoicesCountChanged();

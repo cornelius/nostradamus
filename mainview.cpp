@@ -125,7 +125,8 @@ void MainView::showCriteriaRanker()
   if ( m_mainModel->criteriaCount() < 2 ) return;
   
   m_workAreaLayout->setCurrentWidget( m_ranker );
-  m_ranker->startRanking( m_mainModel->firstCriterion() );
+  m_ranker->startRanking( m_mainModel->criteriaModel(),
+    tr("Which criterion is more relevant?") );
 }
 
 void MainView::showChoicesRanker()
@@ -136,7 +137,8 @@ void MainView::showChoicesRanker()
     m_workAreaLayout->setCurrentWidget( m_criteriaChooser );
   } else {
     m_workAreaLayout->setCurrentWidget( m_ranker );
-    m_ranker->startRanking( m_mainModel->firstCriterion() );
+    m_ranker->startRanking( m_mainModel->choicesModel(),
+      m_mainModel->firstCriterion() );
   }
 }
 
@@ -149,7 +151,7 @@ void MainView::showResult()
 void MainView::setRankingCriterion( const QString &criterion )
 {
   m_workAreaLayout->setCurrentWidget( m_ranker );
-  m_ranker->startRanking( criterion );
+  m_ranker->startRanking( m_mainModel->choicesModel(), criterion );
 }
 
 void MainView::checkNavigationButtons()

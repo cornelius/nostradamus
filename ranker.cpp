@@ -52,8 +52,9 @@ Ranker::Ranker( MainModel *mainModel )
   topLayout->addStretch( 1 );
 }
 
-void Ranker::startRanking( const QString &criterion )
+void Ranker::startRanking( QStandardItemModel *model, const QString &criterion )
 {
+  m_choicesModel = model;
   m_questionLabel->setText( criterion );
 
   newComparison();
@@ -61,7 +62,7 @@ void Ranker::startRanking( const QString &criterion )
 
 void Ranker::newComparison()
 {
-  Choice::Pair pair = m_mainModel->randomPair();
+  Choice::Pair pair = m_mainModel->randomPair( m_choicesModel );
 
   m_leftLabel->setText( pair.first );
   m_rightLabel->setText( pair.second );

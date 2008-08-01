@@ -173,28 +173,28 @@ QString MainModel::firstCriterion() const
   }
 }
 
-Choice::Pair MainModel::randomPair()
+Choice::Pair MainModel::randomPair( QStandardItemModel *model )
 {
-  if ( choicesCount() < 2 ) {
+  if ( model->rowCount() < 2 ) {
     return qMakePair( QString(), QString() );
   }
 
-  QString left = randomChoice();
+  QString left = randomChoice( model );
 
   QString right;
   do {
-    right = randomChoice();
+    right = randomChoice( model );
   } while ( left == right );
   
   return qMakePair( left, right );
 }
 
-QString MainModel::randomChoice()
+QString MainModel::randomChoice( QStandardItemModel *model )
 {
-  if ( choicesCount() == 0 ) return QString();
+  if ( model->rowCount() == 0 ) return QString();
 
-  int index = randomNumber( m_choicesModel->rowCount() - 1 );
-  return m_choicesModel->item( index )->text();
+  int index = randomNumber( model->rowCount() - 1 );
+  return model->item( index )->text();
 }
 
 int MainModel::randomNumber( int max )
