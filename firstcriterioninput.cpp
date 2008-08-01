@@ -26,6 +26,8 @@ FirstCriterionInput::FirstCriterionInput( QStandardItemModel *model )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
+  topLayout->addStretch( 1 );
+
   QLabel *label = new QLabel( "Enter a criterion:" );
   topLayout->addWidget( label );
 
@@ -42,6 +44,8 @@ FirstCriterionInput::FirstCriterionInput( QStandardItemModel *model )
   newLayout->addWidget( m_newButton );
   connect( m_newButton, SIGNAL( clicked() ), SLOT( newCriterion() ) );
   checkNewButton();
+
+  topLayout->addStretch( 1 );
 }
 
 void FirstCriterionInput::newCriterion()
