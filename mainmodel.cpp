@@ -27,7 +27,21 @@ MainModel::MainModel()
   : m_filename( "ranking.xml" )
 {
   m_choicesModel = new QStandardItemModel;
+  connect( m_choicesModel, SIGNAL( rowsRemoved( const QModelIndex &, int,
+    int ) ),
+    SLOT( emitChoicesCountChanged() ) );
+  connect( m_choicesModel, SIGNAL( rowsInserted( const QModelIndex &, int,
+    int ) ),
+    SLOT( emitChoicesCountChanged() ) );
+
   m_criteriaModel = new QStandardItemModel;
+  connect( m_criteriaModel, SIGNAL( rowsRemoved( const QModelIndex &, int,
+    int ) ),
+    SLOT( emitCriteriaCountChanged() ) );
+  connect( m_criteriaModel, SIGNAL( rowsInserted( const QModelIndex &, int,
+    int ) ),
+    SLOT( emitCriteriaCountChanged() ) );
+
   m_resultModel = new ResultModel;
 }
 
@@ -191,6 +205,8 @@ int MainModel::randomNumber( int max )
 void MainModel::addComparison( const Comparison &comparison )
 {
   m_comparisons.append( comparison );
+  
+  emit comparisonsCountChanged( comparisonsCount() );
 }
 
 void MainModel::calculateResult()
@@ -213,4 +229,19 @@ int MainModel::choicesCount() const
 int MainModel::criteriaCount() const
 {
   return m_criteriaModel->rowCount();
+}
+
+int MainModel::comparisonsCount() const
+{
+  return m_comparisons.count();
+}
+
+void MainModel::emitChoicesCountChanged()
+{
+  emit choicesCountChanged( choicesCount() );
+}
+
+void MainModel::emitCriteriaCountChanged()
+{
+  emit criteriaCountChanged( criteriaCount() );
 }

@@ -53,9 +53,19 @@ class MainModel : public QWidget
 
     int choicesCount() const;
     int criteriaCount() const;
+    int comparisonsCount() const;
+
+  signals:
+    void choicesCountChanged( int );
+    void criteriaCountChanged( int );
+    void comparisonsCountChanged( int );
 
   protected:
     QString randomChoice();
+
+  protected slots:
+    void emitChoicesCountChanged();
+    void emitCriteriaCountChanged();
 
   private:
     QStandardItemModel *m_choicesModel;

@@ -42,14 +42,21 @@ class MainView : public QWidget
 
   protected slots:
     void showChoices();
-    void showRanker();
     void showCriteria();
+    void showCriteriaRanker();
+    void showChoicesRanker();
     void showResult();
 
     void setRankingCriterion( const QString &criterion );
+
+    void checkNavigationButtons();
     
   private:
     MainModel *m_mainModel;
+
+    QPushButton *m_criteriaRankerButton;
+    QPushButton *m_choicesRankerButton;
+    QPushButton *m_resultButton;
   
     ChoicesView *m_choicesView;
     CriteriaView *m_criteriaView;
