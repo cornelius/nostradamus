@@ -36,6 +36,9 @@ class Comparison
     void setCriterion( const QString & );
     QString criterion() const;
     
+    void setMeta( bool );
+    bool meta() const;
+    
     void setLeft( const QString & );
     QString left() const;
 
@@ -50,6 +53,7 @@ class Comparison
     
   private:
     QString m_criterion;
+    bool m_meta;
   
     QString m_left;
     QString m_right;

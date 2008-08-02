@@ -22,6 +22,7 @@
 #include "comparison.h"
 
 Comparison::Comparison()
+  : m_meta( false ), m_ranking( 0 )
 {
 }
 
@@ -33,6 +34,16 @@ void Comparison::setCriterion( const QString &c )
 QString Comparison::criterion() const
 {
   return m_criterion;
+}
+
+void Comparison::setMeta( bool m )
+{
+  m_meta = m;
+}
+
+bool Comparison::meta() const
+{
+  return m_meta;
 }
 
 void Comparison::setLeft( const QString &left )

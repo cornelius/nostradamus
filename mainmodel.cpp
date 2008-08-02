@@ -27,7 +27,21 @@ MainModel::MainModel()
   : m_filename( "ranking.xml" )
 {
   m_choicesModel = new QStandardItemModel;
+  connect( m_choicesModel, SIGNAL( rowsRemoved( const QModelIndex &, int,
+    int ) ),
+    SLOT( emitChoicesCountChanged() ) );
+  connect( m_choicesModel, SIGNAL( rowsInserted( const QModelIndex &, int,
+    int ) ),
+    SLOT( emitChoicesCountChanged() ) );
+
   m_criteriaModel = new QStandardItemModel;
+  connect( m_criteriaModel, SIGNAL( rowsRemoved( const QModelIndex &, int,
+    int ) ),
+    SLOT( emitCriteriaCountChanged() ) );
+  connect( m_criteriaModel, SIGNAL( rowsInserted( const QModelIndex &, int,
+    int ) ),
+    SLOT( emitCriteriaCountChanged() ) );
+
   m_resultModel = new ResultModel;
 }
 
@@ -79,6 +93,8 @@ void MainModel::load()
     if ( xml.isStartElement() && xml.name() == "comparison" ) {
 
       Comparison c;  
+
+      c.setMeta( xml.attributes().value( "meta" ) == "true" );
       
       while( !xml.atEnd() ) {
         xml.readNext();
@@ -141,11 +157,14 @@ void MainModel::save()
   xml.writeStartElement( "comparisons" );
   foreach( Comparison c, m_comparisons ) {
     xml.writeStartElement( "comparison" );
+    xml.writeAttribute( "meta", c.meta() ? "true" : "false" );
+
     xml.writeTextElement( "criterion", c.criterion() );
     xml.writeTextElement( "left", c.left() );
     xml.writeTextElement( "right", c.right() );
     xml.writeTextElement( "ranking", QString::number( c.ranking() ) );
     xml.writeTextElement( "updated_at", c.updatedAt().toString() );
+
     xml.writeEndElement();
   }
   xml.writeEndElement();
@@ -162,22 +181,28 @@ QString MainModel::firstCriterion() const
   }
 }
 
-Choice::Pair MainModel::randomPair()
+Choice::Pair MainModel::randomPair( QStandardItemModel *model )
 {
-  QString left = randomChoice();
+  if ( model->rowCount() < 2 ) {
+    return qMakePair( QString(), QString() );
+  }
+
+  QString left = randomChoice( model );
 
   QString right;
   do {
-    right = randomChoice();
+    right = randomChoice( model );
   } while ( left == right );
   
   return qMakePair( left, right );
 }
 
-QString MainModel::randomChoice()
+QString MainModel::randomChoice( QStandardItemModel *model )
 {
-  int index = randomNumber( m_choicesModel->rowCount() - 1 );
-  return m_choicesModel->item( index )->text();
+  if ( model->rowCount() == 0 ) return QString();
+
+  int index = randomNumber( model->rowCount() - 1 );
+  return model->item( index )->text();
 }
 
 int MainModel::randomNumber( int max )
@@ -188,6 +213,8 @@ int MainModel::randomNumber( int max )
 void MainModel::addComparison( const Comparison &comparison )
 {
   m_comparisons.append( comparison );
+  
+  emit comparisonsCountChanged( comparisonsCount() );
 }
 
 void MainModel::calculateResult()
@@ -195,14 +222,36 @@ void MainModel::calculateResult()
   m_resultModel->clear();
   
   foreach( Comparison c, m_comparisons ) {
-    m_resultModel->addResult( c.left(), -c.ranking() );
-    m_resultModel->addResult( c.right(), c.ranking() );
+    if ( !c.meta() ) {
+      m_resultModel->addResult( c.left(), -c.ranking() );
+      m_resultModel->addResult( c.right(), c.ranking() );
+    }
   }
 
   m_resultModel->sync();
 }
 
+int MainModel::choicesCount() const
+{
+  return m_choicesModel->rowCount();
+}
+
 int MainModel::criteriaCount() const
 {
   return m_criteriaModel->rowCount();
+}
+
+int MainModel::comparisonsCount() const
+{
+  return m_comparisons.count();
+}
+
+void MainModel::emitChoicesCountChanged()
+{
+  emit choicesCountChanged( choicesCount() );
+}
+
+void MainModel::emitCriteriaCountChanged()
+{
+  emit criteriaCountChanged( criteriaCount() );
 }
