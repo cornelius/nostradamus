@@ -21,8 +21,6 @@
 
 #include "mainmodel.h"
 
-#include "resultmodel.h"
-
 MainModel::MainModel()
   : m_filename( "ranking.xml" )
 {
@@ -34,7 +32,7 @@ MainModel::MainModel()
     int ) ),
     SLOT( emitChoicesCountChanged() ) );
 
-  m_criteriaModel = new QStandardItemModel;
+  m_criteriaModel = new CriteriaModel( this );
   connect( m_criteriaModel, SIGNAL( rowsRemoved( const QModelIndex &, int,
     int ) ),
     SLOT( emitCriteriaCountChanged() ) );
@@ -50,7 +48,7 @@ QStandardItemModel *MainModel::choicesModel() const
   return m_choicesModel;
 }
 
-QStandardItemModel *MainModel::criteriaModel() const
+CriteriaModel *MainModel::criteriaModel() const
 {
   return m_criteriaModel;
 }
@@ -86,8 +84,7 @@ void MainModel::load()
     }
 
     if ( xml.isStartElement() && xml.name() == "criterion" ) {
-      QStandardItem *item = new QStandardItem( xml.readElementText() );
-      m_criteriaModel->appendRow( item );
+      m_criteria.append( xml.readElementText() );
     }
     
     if ( xml.isStartElement() && xml.name() == "comparison" ) {
@@ -149,8 +146,8 @@ void MainModel::save()
   xml.writeEndElement();
   
   xml.writeStartElement( "criteria" );
-  for( int i = 0; i < m_criteriaModel->rowCount(); ++i ) {
-    xml.writeTextElement( "criterion", m_criteriaModel->item( i )->text() );
+  for( int i = 0; i < criteriaCount(); ++i ) {
+    xml.writeTextElement( "criterion", m_criteria[ i ] );
   }
   xml.writeEndElement();
 
@@ -174,14 +171,20 @@ void MainModel::save()
 
 QString MainModel::firstCriterion() const
 {
-  if ( m_criteriaModel->rowCount() < 1 ) {
+  if ( criteriaCount() < 1 ) {
     return QString();
   } else {
-    return m_criteriaModel->item( 0 )->text();
+    return m_criteria[ 0 ];
   }
 }
 
-Choice::Pair MainModel::randomPair( QStandardItemModel *model )
+void MainModel::addCriterion( const QString &c )
+{
+  m_criteria.append( c );
+  emitCriteriaCountChanged();
+}
+
+Choice::Pair MainModel::randomPair( QAbstractItemModel *model )
 {
   if ( model->rowCount() < 2 ) {
     return qMakePair( QString(), QString() );
@@ -197,12 +200,15 @@ Choice::Pair MainModel::randomPair( QStandardItemModel *model )
   return qMakePair( left, right );
 }
 
-QString MainModel::randomChoice( QStandardItemModel *model )
+QString MainModel::randomChoice( QAbstractItemModel *model )
 {
   if ( model->rowCount() == 0 ) return QString();
 
-  int index = randomNumber( model->rowCount() - 1 );
-  return model->item( index )->text();
+  QModelIndex index = model->index( randomNumber( model->rowCount() - 1 ), 0 );
+
+  QString result = index.data().toString();
+  
+  return result;
 }
 
 int MainModel::randomNumber( int max )
@@ -238,7 +244,7 @@ int MainModel::choicesCount() const
 
 int MainModel::criteriaCount() const
 {
-  return m_criteriaModel->rowCount();
+  return m_criteria.count();
 }
 
 int MainModel::comparisonsCount() const
@@ -254,4 +260,9 @@ void MainModel::emitChoicesCountChanged()
 void MainModel::emitCriteriaCountChanged()
 {
   emit criteriaCountChanged( criteriaCount() );
+}
+
+QStringList MainModel::criteria() const
+{
+  return m_criteria;
 }

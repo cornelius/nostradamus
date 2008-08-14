@@ -26,7 +26,8 @@
 
 #include <QtGui>
 
-class ResultModel;
+#include "resultmodel.h"
+#include "criteriamodel.h"
 
 class MainModel : public QWidget
 {
@@ -38,22 +39,24 @@ class MainModel : public QWidget
     void load();
 
     QStandardItemModel *choicesModel() const;
-    QStandardItemModel *criteriaModel() const;
+    CriteriaModel *criteriaModel() const;
     ResultModel *resultModel() const;
 
-    QString firstCriterion() const;
-
-    Choice::Pair randomPair( QStandardItemModel * );
+    Choice::Pair randomPair( QAbstractItemModel * );
 
     int randomNumber( int max );
 
+    int choicesCount() const;
+
+    void addCriterion( const QString & );
+    int criteriaCount() const;
+    QString firstCriterion() const;
+    QStringList criteria() const;
+
     void addComparison( const Comparison & );
+    int comparisonsCount() const;
 
     void calculateResult();
-
-    int choicesCount() const;
-    int criteriaCount() const;
-    int comparisonsCount() const;
 
   signals:
     void choicesCountChanged( int );
@@ -61,7 +64,7 @@ class MainModel : public QWidget
     void comparisonsCountChanged( int );
 
   protected:
-    QString randomChoice( QStandardItemModel * );
+    QString randomChoice( QAbstractItemModel * );
 
   protected slots:
     void emitChoicesCountChanged();
@@ -69,9 +72,10 @@ class MainModel : public QWidget
 
   private:
     QStandardItemModel *m_choicesModel;
-    QStandardItemModel *m_criteriaModel;
+    CriteriaModel *m_criteriaModel;
     ResultModel *m_resultModel;
 
+    QStringList m_criteria;
     Comparison::List m_comparisons;
 
     QString m_filename;

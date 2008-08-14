@@ -23,11 +23,13 @@
 
 #include <QtGui>
 
+#include "mainmodel.h"
+
 class FirstCriterionInput : public QWidget
 {
     Q_OBJECT
   public:
-    FirstCriterionInput( QStandardItemModel * );
+    FirstCriterionInput( MainModel * );
 
   signals:
     void criterionEntered();
@@ -37,7 +39,7 @@ class FirstCriterionInput : public QWidget
     void checkNewButton();
 
   private:
-    QStandardItemModel *m_model; 
+    MainModel *m_model;
 
     QLineEdit *m_newCriterionEdit;
     QPushButton *m_newButton;

@@ -52,7 +52,7 @@ Ranker::Ranker( MainModel *mainModel )
   topLayout->addStretch( 1 );
 }
 
-void Ranker::startRanking( QStandardItemModel *model, const QString &criterion )
+void Ranker::startRanking( QAbstractItemModel *model, const QString &criterion )
 {
   m_choicesModel = model;
   m_questionLabel->setText( criterion );

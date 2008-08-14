@@ -21,7 +21,9 @@
 
 #include "criteriaview.h"
 
-CriteriaView::CriteriaView( QStandardItemModel *model )
+#include "mainmodel.h"
+
+CriteriaView::CriteriaView( MainModel *model )
   : m_model( model )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
@@ -29,7 +31,7 @@ CriteriaView::CriteriaView( QStandardItemModel *model )
   QListView *listView = new QListView;
   topLayout->addWidget( listView );
   
-  listView->setModel( m_model );
+  listView->setModel( m_model->criteriaModel() );
 
   QBoxLayout *newLayout = new QHBoxLayout;
   topLayout->addLayout( newLayout );
@@ -48,8 +50,7 @@ CriteriaView::CriteriaView( QStandardItemModel *model )
 
 void CriteriaView::newCriterion()
 {
-  QStandardItem *item = new QStandardItem( m_newCriterionEdit->text() );
-  m_model->appendRow( item );
+  m_model->addCriterion( m_newCriterionEdit->text() );
 
   m_newCriterionEdit->setText( QString() );
 }

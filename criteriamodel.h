@@ -18,27 +18,31 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef CRITERIACHOOSER_H
-#define CRITERIACHOOSER_H
+#ifndef CRITERIAMODEL_H
+#define CRITERIAMODEL_H
 
 #include <QtGui>
 
-#include "criteriamodel.h"
+class MainModel;
 
-class CriteriaChooser : public QWidget
+class CriteriaModel : public QAbstractTableModel
 {
     Q_OBJECT
   public:
-    CriteriaChooser( CriteriaModel * );
+    CriteriaModel( MainModel *model, QObject *parent = 0 );
 
-  signals:
-    void itemChosen( const QString & );
+    void clear();
 
-  protected slots:
-    void chooseItem( const QModelIndex & );
-    
+    int rowCount(const QModelIndex &parent = QModelIndex()) const;
+    int columnCount(const QModelIndex &parent = QModelIndex()) const;
+    QVariant data(const QModelIndex &index, int role) const;
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const;
+
+  protected:
+
   private:
-    CriteriaModel *m_model;
+    MainModel *m_mainModel;
 };
 
 #endif

@@ -31,7 +31,7 @@ class Ranker : public QWidget
   public:
     Ranker( MainModel *mainModel );
 
-    void startRanking( QStandardItemModel *model, const QString &criterion );
+    void startRanking( QAbstractItemModel *model, const QString &criterion );
 
   protected slots:
     void slotRanked( int );
@@ -41,7 +41,7 @@ class Ranker : public QWidget
 
   private:
     MainModel *m_mainModel;
-    QStandardItemModel *m_choicesModel;
+    QAbstractItemModel *m_choicesModel;
 
     QLabel *m_questionLabel;
     QLabel *m_leftLabel;

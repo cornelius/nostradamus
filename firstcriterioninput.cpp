@@ -21,7 +21,7 @@
 
 #include "firstcriterioninput.h"
 
-FirstCriterionInput::FirstCriterionInput( QStandardItemModel *model )
+FirstCriterionInput::FirstCriterionInput( MainModel *model )
   : m_model( model )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
@@ -50,8 +50,7 @@ FirstCriterionInput::FirstCriterionInput( QStandardItemModel *model )
 
 void FirstCriterionInput::newCriterion()
 {
-  QStandardItem *item = new QStandardItem( m_newCriterionEdit->text() );
-  m_model->appendRow( item );
+  m_model->addCriterion( m_newCriterionEdit->text() );
 
   emit criterionEntered();
 }

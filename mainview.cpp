@@ -75,11 +75,10 @@ MainView::MainView()
   m_choicesView = new ChoicesView( m_mainModel->choicesModel() );
   m_workAreaLayout->addWidget( m_choicesView );
 
-  m_criteriaView = new CriteriaView( m_mainModel->criteriaModel() );
+  m_criteriaView = new CriteriaView( m_mainModel );
   m_workAreaLayout->addWidget( m_criteriaView );
 
-  m_firstCriterionInput = new FirstCriterionInput(
-    m_mainModel->criteriaModel() );
+  m_firstCriterionInput = new FirstCriterionInput( m_mainModel );
   m_workAreaLayout->addWidget( m_firstCriterionInput );
   connect( m_firstCriterionInput, SIGNAL( criterionEntered() ),
     SLOT( showChoicesRanker() ) );

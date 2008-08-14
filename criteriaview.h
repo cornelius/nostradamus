@@ -23,18 +23,20 @@
 
 #include <QtGui>
 
+class MainModel;
+
 class CriteriaView : public QWidget
 {
     Q_OBJECT
   public:
-    CriteriaView( QStandardItemModel * );
+    CriteriaView( MainModel * );
 
   protected slots:
     void newCriterion();
     void checkNewButton();
 
   private:
-    QStandardItemModel *m_model; 
+    MainModel *m_model; 
 
     QLineEdit *m_newCriterionEdit;
     QPushButton *m_newButton;

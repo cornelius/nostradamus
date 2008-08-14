@@ -21,7 +21,7 @@
 
 #include "criteriachooser.h"
 
-CriteriaChooser::CriteriaChooser( QStandardItemModel *model )
+CriteriaChooser::CriteriaChooser( CriteriaModel *model )
   : m_model( model )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
