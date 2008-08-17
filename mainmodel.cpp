@@ -247,9 +247,16 @@ int MainModel::criteriaCount() const
   return m_criteria.count();
 }
 
-int MainModel::comparisonsCount() const
+int MainModel::comparisonsCount( const QString &criterion ) const
 {
-  return m_comparisons.count();
+  if ( criterion.isEmpty() )
+    return m_comparisons.count();
+
+  int count = 0;
+  foreach( Comparison c, m_comparisons ) {
+    if ( c.criterion() == criterion ) ++count;
+  }  
+  return count;
 }
 
 void MainModel::emitChoicesCountChanged()

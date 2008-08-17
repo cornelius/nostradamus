@@ -28,7 +28,7 @@ CriteriaView::CriteriaView( MainModel *model )
 {
   QBoxLayout *topLayout = new QVBoxLayout( this );
 
-  QListView *listView = new QListView;
+  QTreeView *listView = new QTreeView;
   topLayout->addWidget( listView );
   
   listView->setModel( m_model->criteriaModel() );

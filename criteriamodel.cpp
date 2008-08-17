@@ -41,7 +41,7 @@ QVariant CriteriaModel::data(const QModelIndex &index, int role) const
     case 0:
       return m_mainModel->criteria()[ row ];
     case 1:
-      return m_mainModel->comparisonsCount();
+      return m_mainModel->comparisonsCount( m_mainModel->criteria()[ row ]);
     default:
       return QVariant();
   }

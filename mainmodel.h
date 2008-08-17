@@ -54,7 +54,7 @@ class MainModel : public QWidget
     QStringList criteria() const;
 
     void addComparison( const Comparison & );
-    int comparisonsCount() const;
+    int comparisonsCount( const QString &criterion = QString() ) const;
 
     void calculateResult();
 
