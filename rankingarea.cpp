@@ -21,6 +21,8 @@
 
 #include "rankingarea.h"
 
+#include "comparison.h"
+
 RankingArea::RankingArea()
 {
   setFrameStyle( QFrame::Box | QFrame::Raised );
@@ -31,7 +33,8 @@ RankingArea::RankingArea()
 
 void RankingArea::mousePressEvent( QMouseEvent *event )
 {
-  int ranking = event->x() * 100 / width() - 50;
+  int ranking = event->x() * 2 * Comparison::maxRanking() / width() -
+    Comparison::maxRanking();
 
   emit ranked( ranking );
 }

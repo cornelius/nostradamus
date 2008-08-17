@@ -21,6 +21,8 @@
 
 #include "result.h"
 
+#include <QtCore>
+
 Result::Result( const QString &criterion, Comparison::List &comparisons )
   : m_criterion( criterion ), m_comparisons( comparisons )
 {
@@ -28,47 +30,76 @@ Result::Result( const QString &criterion, Comparison::List &comparisons )
 
 void Result::calculate()
 {
-  m_results.clear();
-  m_resultCounts.clear();
+  m_rankings.clear();
+  m_rankingsCounts.clear();
 
+  Result metaResult( "", m_comparisons );
+  foreach( Comparison c, m_comparisons ) {
+    if ( c.meta() ) {
+      metaResult.addResult( c.left(), -c.ranking() );
+      metaResult.addResult( c.right(), c.ranking() );
+    }
+  }
+  metaResult.createItemList();
+  
+  qDebug() << "META RESULT";
+  foreach( ResultItem item, metaResult.items() ) {
+    qDebug() << item.choice << item.ranking;
+  }
+
+  qDebug() << "RESULT";
   foreach( Comparison c, m_comparisons ) {
     if ( !c.meta() ) {
-      addResult( c.left(), -c.ranking() );
-      addResult( c.right(), c.ranking() );
+      ResultItem i = metaResult.item( c.criterion() );
+      qDebug() << "  " << i.choice << i.ranking <<
+        i.normalizedRanking << i.comparisonsCount;
+      int weight = i.normalizedRanking + Comparison::maxRanking();
+      addResult( c.left(), -c.ranking(), weight );
+      addResult( c.right(), c.ranking(), weight );
     }
   }
 
   createItemList();
 }
 
-void Result::addResult( const QString &choice, int ranking )
+void Result::addResult( const QString &choice, int ranking, int weight )
 {
   int count = 0;
 
   QMap<QString,int>::Iterator it;
-  it = m_results.find( choice );
-  if ( it != m_results.end() ) {
+
+  int weightedRanking = ranking * weight;
+
+  it = m_rankings.find( choice );
+  if ( it != m_rankings.end() ) {
     ranking += it.value();
-    count = m_resultCounts.value( choice );
+    count = m_rankingsCounts.value( choice );
   }
-  m_results.insert( choice, ranking );
-  m_resultCounts.insert( choice, ++count );
+
+  it = m_weightedRankings.find( choice );
+  if ( it != m_weightedRankings.end() ) {
+    weightedRanking = it.value() + ranking * weight;
+  }
+
+  m_rankings.insert( choice, ranking );
+  m_weightedRankings.insert( choice, weightedRanking );
+  m_rankingsCounts.insert( choice, ++count );
 }
 
 void Result::createItemList()
 {
   m_items.clear();
 
-  QList<QString> choices = m_results.keys();
+  QList<QString> choices = m_rankings.keys();
 
   foreach( QString choice, choices ) {
     ResultItem item;
   
     item.choice = choice;
-    item.comparisonsCount = m_resultCounts.value( choice );
-    item.ranking = m_results.value( choice );
+    item.comparisonsCount = m_rankingsCounts.value( choice );
+    item.ranking = m_rankings.value( choice );
     item.normalizedRanking = item.ranking / item.comparisonsCount;
-    item.weightedRanking = 0;
+    item.weightedRanking = m_weightedRankings.value( choice );
 
     m_items.append( item );
   }
@@ -77,4 +108,13 @@ void Result::createItemList()
 ResultItem::List Result::items() const
 {
   return m_items;
-} 
+}
+
+ResultItem Result::item( const QString &choice ) const
+{
+  foreach( ResultItem item, m_items ) {
+    if ( item.choice == choice ) return item;
+  }
+  Q_ASSERT( false );
+  return ResultItem();
+}

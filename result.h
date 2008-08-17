@@ -44,18 +44,22 @@ class Result
 
     void calculate();
 
-    ResultItem::List items() const; 
+    ResultItem::List items() const;
+    ResultItem item( const QString &choice ) const;
+
+    int ranking( const QString &choice );
 
   protected:
     void createItemList();
-    void addResult( const QString &choice, int ranking );
+    void addResult( const QString &choice, int ranking, int weight = 1 );
     
   private:
     QString m_criterion;
     Comparison::List m_comparisons;
   
-    QMap<QString,int> m_results;
-    QMap<QString,int> m_resultCounts;
+    QMap<QString,int> m_rankings;
+    QMap<QString,int> m_weightedRankings;
+    QMap<QString,int> m_rankingsCounts;
 
     ResultItem::List m_items;
 };

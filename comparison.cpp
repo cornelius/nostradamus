@@ -21,6 +21,11 @@
 
 #include "comparison.h"
 
+int Comparison::maxRanking()
+{
+  return 100;
+}
+
 Comparison::Comparison()
   : m_meta( false ), m_ranking( 0 )
 {

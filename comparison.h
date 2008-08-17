@@ -50,6 +50,8 @@ class Comparison
 
     void setUpdatedAt( const QDateTime & );
     QDateTime updatedAt() const;
+
+    static int maxRanking();
     
   private:
     QString m_criterion;
