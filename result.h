@@ -34,6 +34,7 @@ struct ResultItem
   int ranking;
   int comparisonsCount;
   int normalizedRanking;
+  int weightedRanking;
 };
 
 class Result

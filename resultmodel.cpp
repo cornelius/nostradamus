@@ -60,6 +60,8 @@ QVariant ResultModel::data(const QModelIndex &index, int role) const
       return item.ranking;
     case 3:
       return item.normalizedRanking;
+    case 4:
+      return item.weightedRanking;
     default:
       return QVariant();
   }
@@ -84,6 +86,8 @@ QVariant ResultModel::headerData(int section, Qt::Orientation orientation,
         return "Ranking";
       case 3:
         return "Normalized";
+      case 4:
+        return "Weighted";
       default:
         return "undefined";
     }
@@ -103,5 +107,5 @@ int ResultModel::columnCount(const QModelIndex &parent) const
 {
   Q_UNUSED( parent );
 
-  return 4;
+  return 5;
 }
