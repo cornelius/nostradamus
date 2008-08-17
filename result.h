@@ -31,9 +31,9 @@ struct ResultItem
   typedef QList<ResultItem> List;
 
   QString choice;
-  int result;
-  int count;
-  int weightedResult;
+  int ranking;
+  int comparisonsCount;
+  int normalizedRanking;
 };
 
 class Result

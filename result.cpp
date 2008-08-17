@@ -65,9 +65,9 @@ void Result::createItemList()
     ResultItem item;
   
     item.choice = choice;
-    item.count = m_resultCounts.value( choice );
-    item.result = m_results.value( choice );
-    item.weightedResult = item.result / item.count;
+    item.comparisonsCount = m_resultCounts.value( choice );
+    item.ranking = m_results.value( choice );
+    item.normalizedRanking = item.ranking / item.comparisonsCount;
 
     m_items.append( item );
   }

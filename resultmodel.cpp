@@ -55,11 +55,11 @@ QVariant ResultModel::data(const QModelIndex &index, int role) const
     case 0:
       return item.choice;
     case 1:
-      return item.result;
+      return item.comparisonsCount;
     case 2:
-      return item.count;
+      return item.ranking;
     case 3:
-      return item.weightedResult;
+      return item.normalizedRanking;
     default:
       return QVariant();
   }
@@ -79,11 +79,11 @@ QVariant ResultModel::headerData(int section, Qt::Orientation orientation,
       case 0:
         return "Choice";
       case 1:
-        return "Ranking";
-      case 2:
         return "Rankings";
+      case 2:
+        return "Ranking";
       case 3:
-        return "Result";
+        return "Normalized";
       default:
         return "undefined";
     }
