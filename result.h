@@ -18,30 +18,45 @@
   Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301,
   USA.
 */
-#ifndef RESULTMODEL_H
-#define RESULTMODEL_H
+#ifndef RESULT_H
+#define RESULT_H
 
-#include "result.h"
+#include "comparison.h"
 
-#include <QtGui>
+#include <QString>
+#include <QMap>
 
-class ResultModel : public QAbstractTableModel
+struct ResultItem
 {
-    Q_OBJECT
+  typedef QList<ResultItem> List;
+
+  QString choice;
+  int result;
+  int count;
+  int weightedResult;
+};
+
+class Result
+{
   public:
-    ResultModel( QObject *parent = 0 );
-    ~ResultModel();
+    Result( const QString &criterion, Comparison::List & );
 
-    void setResult( Result * );
+    void calculate();
 
-    int rowCount(const QModelIndex &parent = QModelIndex()) const;
-    int columnCount(const QModelIndex &parent = QModelIndex()) const;
-    QVariant data(const QModelIndex &index, int role) const;
-    QVariant headerData(int section, Qt::Orientation orientation,
-                        int role = Qt::DisplayRole) const;
+    ResultItem::List items() const; 
 
+  protected:
+    void createItemList();
+    void addResult( const QString &choice, int ranking );
+    
   private:
-    Result *m_result;
+    QString m_criterion;
+    Comparison::List m_comparisons;
+  
+    QMap<QString,int> m_results;
+    QMap<QString,int> m_resultCounts;
+
+    ResultItem::List m_items;
 };
 
 #endif

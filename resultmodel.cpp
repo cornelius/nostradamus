@@ -22,56 +22,44 @@
 #include "resultmodel.h"
 
 ResultModel::ResultModel( QObject *parent )
-  : QAbstractTableModel( parent )
+  : QAbstractTableModel( parent ), m_result( 0 )
 {
 }
 
-void ResultModel::clear()
+ResultModel::~ResultModel()
 {
-  m_results.clear();
-  m_resultCounts.clear();
+  delete m_result;
 }
 
-void ResultModel::sync()
+void ResultModel::setResult( Result *result )
 {
+  delete m_result;
+
+  m_result = result;
   reset();
-}
-
-void ResultModel::addResult( const QString &choice, int ranking )
-{
-  int count = 0;
-
-  QMap<QString,int>::Iterator it;
-  it = m_results.find( choice );
-  if ( it != m_results.end() ) {
-    ranking += it.value();
-    count = m_resultCounts.value( choice );
-  }
-  m_results.insert( choice, ranking );
-  m_resultCounts.insert( choice, ++count );
 }
 
 QVariant ResultModel::data(const QModelIndex &index, int role) const
 {
-  if ( role != Qt::DisplayRole ) {
+  if ( role != Qt::DisplayRole || !m_result ) {
     return QVariant();
   }
 
-  QList<QString> keys = m_results.keys();
+  ResultItem::List items = m_result->items();
 
   int col = index.column();
   int row = index.row();
-  QString key = keys.value( row );
+  ResultItem item = items[ row ];
 
   switch ( col ) {
     case 0:
-      return key;
+      return item.choice;
     case 1:
-      return m_results.value( key );
+      return item.result;
     case 2:
-      return m_resultCounts.value( key );
+      return item.count;
     case 3:
-      return m_results.value( key ) / m_resultCounts.value( key );
+      return item.weightedResult;
     default:
       return QVariant();
   }
@@ -106,7 +94,9 @@ int ResultModel::rowCount(const QModelIndex &parent) const
 {
   Q_UNUSED( parent );
 
-  return m_results.size();
+  if ( !m_result ) return 0;
+
+  return m_result->items().size();
 }
 
 int ResultModel::columnCount(const QModelIndex &parent) const

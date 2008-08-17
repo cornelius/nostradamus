@@ -225,16 +225,11 @@ void MainModel::addComparison( const Comparison &comparison )
 
 void MainModel::calculateResult()
 {
-  m_resultModel->clear();
-  
-  foreach( Comparison c, m_comparisons ) {
-    if ( !c.meta() ) {
-      m_resultModel->addResult( c.left(), -c.ranking() );
-      m_resultModel->addResult( c.right(), c.ranking() );
-    }
-  }
+  Result *result = new Result( "", m_comparisons );
 
-  m_resultModel->sync();
+  result->calculate();
+
+  m_resultModel->setResult( result );
 }
 
 int MainModel::choicesCount() const
@@ -255,7 +250,7 @@ int MainModel::comparisonsCount( const QString &criterion ) const
   int count = 0;
   foreach( Comparison c, m_comparisons ) {
     if ( c.criterion() == criterion ) ++count;
-  }  
+  }
   return count;
 }
 
