@@ -1,3 +1,6 @@
+#include <sys/types.h>
+#include <unistd.h>
+
 #include <QApplication>
 
 #include "mainwindow.h"
