@@ -35,9 +35,8 @@ void ResultModel::setResult( Result *result )
 {
   beginResetModel();
   delete m_result;
-  endResetModel();
-
   m_result = result;
+  endResetModel();
 }
 
 QVariant ResultModel::data(const QModelIndex &index, int role) const
@@ -50,6 +49,7 @@ QVariant ResultModel::data(const QModelIndex &index, int role) const
 
   int col = index.column();
   int row = index.row();
+
   ResultItem item = items[ row ];
 
   switch ( col ) {
