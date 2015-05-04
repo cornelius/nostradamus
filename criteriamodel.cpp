@@ -30,6 +30,8 @@ CriteriaModel::CriteriaModel( MainModel *model, QObject *parent )
 
 void CriteriaModel::addCriterion(const QString &c)
 {
+  Q_UNUSED(c)
+
   beginInsertRows(QModelIndex(), rowCount(), rowCount());
   endInsertRows();
 }

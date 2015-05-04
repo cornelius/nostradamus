@@ -31,15 +31,19 @@ class CriteriaChooser;
 class Ranker;
 class ResultView;
 class MainModel;
+class QSettings;
 
 class MainView : public QWidget
 {
     Q_OBJECT
   public:
-    MainView();
+    MainView(QSettings *);
 
-    void save();
+    bool save();
+    bool save(const QString &filename);
     void load();
+
+    QString filename();
 
   protected slots:
     void showChoices();
@@ -53,6 +57,8 @@ class MainView : public QWidget
     void checkNavigationButtons();
     
   private:
+    QSettings *m_settings;
+
     MainModel *m_mainModel;
 
     QPushButton *m_criteriaRankerButton;

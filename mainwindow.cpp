@@ -16,7 +16,9 @@
 
 MainWindow::MainWindow()
 {
-  m_mainView = new MainView;
+  m_settings = new QSettings("Cornelius", "Nostradamus");
+
+  m_mainView = new MainView(m_settings);
   setCentralWidget( m_mainView );
 
   m_mainView->load();
@@ -30,6 +32,11 @@ MainWindow::MainWindow()
 */
 
   readSettings();
+}
+
+MainWindow::~MainWindow()
+{
+  delete m_settings;
 }
 
 void MainWindow::closeEvent(QCloseEvent *event)
@@ -70,17 +77,17 @@ bool MainWindow::save()
    if (curFile.isEmpty()) {
        return saveAs();
    } else {
-       return saveFile(curFile);
+       return m_mainView->save(curFile);
    }
 }
 
 bool MainWindow::saveAs()
 {
-   QString fileName = QFileDialog::getSaveFileName(this);
-   if (fileName.isEmpty())
+   QString filename = QFileDialog::getSaveFileName(this);
+   if (filename.isEmpty())
        return false;
 
-   return saveFile(fileName);
+   return m_mainView->save(filename);
 }
 
 void MainWindow::about()
@@ -111,11 +118,11 @@ void MainWindow::createActions()
    saveAct->setShortcut(tr("Ctrl+S"));
    saveAct->setStatusTip(tr("Save the document to disk"));
    connect(saveAct, SIGNAL(triggered()), this, SLOT(save()));
+*/
 
    saveAsAct = new QAction(tr("Save &As..."), this);
    saveAsAct->setStatusTip(tr("Save the document under a new name"));
    connect(saveAsAct, SIGNAL(triggered()), this, SLOT(saveAs()));
-*/
 
    exitAct = new QAction(tr("E&xit"), this);
    exitAct->setShortcut(tr("Ctrl+Q"));
@@ -167,9 +174,9 @@ void MainWindow::createMenus()
    fileMenu->addAction(newAct);
    fileMenu->addAction(openAct);
    fileMenu->addAction(saveAct);
+*/
    fileMenu->addAction(saveAsAct);
    fileMenu->addSeparator();
-*/
    fileMenu->addAction(exitAct);
 
 /*
@@ -205,18 +212,17 @@ void MainWindow::createStatusBar()
 
 void MainWindow::readSettings()
 {
-  QSettings settings("Cornelius", "Nostradamus");
-  QPoint pos = settings.value("pos", QPoint(200, 200)).toPoint();
-  QSize size = settings.value("size", QSize(400, 400)).toSize();
+  QPoint pos = m_settings->value("pos", QPoint(200, 200)).toPoint();
+  QSize size = m_settings->value("size", QSize(400, 400)).toSize();
+
   resize(size);
   move(pos);
 }
 
 void MainWindow::writeSettings()
 {
-  QSettings settings("Cornelius", "Nostradamus");
-  settings.setValue("pos", pos());
-  settings.setValue("size", size());
+  m_settings->setValue("pos", pos());
+  m_settings->setValue("size", size());
 }
 
 bool MainWindow::maybeSave()
@@ -253,27 +259,6 @@ void MainWindow::loadFile(const QString &fileName)
 
    setCurrentFile(fileName);
    statusBar()->showMessage(tr("File loaded"), 2000);
-}
-
-bool MainWindow::saveFile(const QString &fileName)
-{
-   QFile file(fileName);
-   if (!file.open(QFile::WriteOnly | QFile::Text)) {
-       QMessageBox::warning(this, tr("Application"),
-                            tr("Cannot write file %1:\n%2.")
-                            .arg(fileName)
-                            .arg(file.errorString()));
-       return false;
-   }
-
-   QTextStream out(&file);
-   QApplication::setOverrideCursor(Qt::WaitCursor);
-   out << textEdit->toPlainText();
-   QApplication::restoreOverrideCursor();
-
-   setCurrentFile(fileName);
-   statusBar()->showMessage(tr("File saved"), 2000);
-   return true;
 }
 
 void MainWindow::setCurrentFile(const QString &fileName)

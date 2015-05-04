@@ -34,8 +34,8 @@ class MainModel : public QWidget
   public:
     MainModel();
 
-    void save();
-    void load();
+    bool save(const QString &filename);
+    bool load(const QString &filename);
 
     QStandardItemModel *choicesModel() const;
     CriteriaModel *criteriaModel() const;
@@ -76,8 +76,6 @@ class MainModel : public QWidget
 
     QStringList m_criteria;
     Comparison::List m_comparisons;
-
-    QString m_filename;
 };
 
 #endif
