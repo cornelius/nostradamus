@@ -183,7 +183,7 @@ QString MainModel::firstCriterion() const
 void MainModel::addCriterion( const QString &c )
 {
   m_criteria.append( c );
-  emitCriteriaCountChanged();
+  m_criteriaModel->addCriterion( c );
 }
 
 Choice::Pair MainModel::randomPair( QAbstractItemModel *model )

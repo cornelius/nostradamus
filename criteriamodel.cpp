@@ -28,6 +28,12 @@ CriteriaModel::CriteriaModel( MainModel *model, QObject *parent )
 {
 }
 
+void CriteriaModel::addCriterion(const QString &c)
+{
+  beginInsertRows(QModelIndex(), rowCount(), rowCount());
+  endInsertRows();
+}
+
 QVariant CriteriaModel::data(const QModelIndex &index, int role) const
 {
   if ( role != Qt::DisplayRole ) {
