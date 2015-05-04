@@ -23,7 +23,7 @@
 
 #include "result.h"
 
-#include <QtGui>
+#include <QAbstractTableModel>
 
 class ResultModel : public QAbstractTableModel
 {

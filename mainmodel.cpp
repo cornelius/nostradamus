@@ -21,6 +21,8 @@
 
 #include "mainmodel.h"
 
+#include <QMessageBox>
+
 MainModel::MainModel()
   : m_filename( "ranking.xml" )
 {

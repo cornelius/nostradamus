@@ -21,9 +21,9 @@
 #ifndef CRITERIACHOOSER_H
 #define CRITERIACHOOSER_H
 
-#include <QtGui>
-
 #include "criteriamodel.h"
+
+#include <QWidget>
 
 class CriteriaChooser : public QWidget
 {

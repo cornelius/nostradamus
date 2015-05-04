@@ -21,6 +21,9 @@
 
 #include "firstcriterioninput.h"
 
+#include <QBoxLayout>
+#include <QLabel>
+
 FirstCriterionInput::FirstCriterionInput( MainModel *model )
   : m_model( model )
 {

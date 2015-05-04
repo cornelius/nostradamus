@@ -2,7 +2,17 @@
 
 #include "mainview.h"
 
-#include <QtGui>
+#include <QTextEdit>
+#include <QCloseEvent>
+#include <QFileDialog>
+#include <QMessageBox>
+#include <QAction>
+#include <QMenuBar>
+#include <QToolBar>
+#include <QStatusBar>
+#include <QSettings>
+#include <QTextStream>
+#include <QApplication>
 
 MainWindow::MainWindow()
 {

@@ -1,9 +1,9 @@
-#include <sys/types.h>
-#include <unistd.h>
+#include "mainwindow.h"
 
 #include <QApplication>
 
-#include "mainwindow.h"
+#include <sys/types.h>
+#include <unistd.h>
 
 int main(int argc, char *argv[])
 {

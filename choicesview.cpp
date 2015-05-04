@@ -21,7 +21,8 @@
 
 #include "choicesview.h"
 
-#include <QtGui>
+#include <QBoxLayout>
+#include <QListView>
 
 ChoicesView::ChoicesView( QStandardItemModel *model )
   : m_model( model )

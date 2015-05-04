@@ -21,7 +21,8 @@
 #ifndef MAINVIEW_H
 #define MAINVIEW_H
 
-#include <QtGui>
+#include <QPushButton>
+#include <QStackedLayout>
 
 class ChoicesView;
 class CriteriaView;

@@ -23,11 +23,10 @@
 
 #include "choice.h"
 #include "comparison.h"
-
-#include <QtGui>
-
 #include "resultmodel.h"
 #include "criteriamodel.h"
+
+#include <QWidget>
 
 class MainModel : public QWidget
 {

@@ -1,5 +1,7 @@
+QT += widgets
+
 TEMPLATE = app
-TARGET = 
+TARGET = nostradamus
 DEPENDPATH += .
 INCLUDEPATH += .
 

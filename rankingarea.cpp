@@ -23,6 +23,8 @@
 
 #include "comparison.h"
 
+#include <QMouseEvent>
+
 RankingArea::RankingArea()
 {
   setFrameStyle( QFrame::Box | QFrame::Raised );

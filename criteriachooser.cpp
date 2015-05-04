@@ -21,6 +21,9 @@
 
 #include "criteriachooser.h"
 
+#include <QBoxLayout>
+#include <QListView>
+
 CriteriaChooser::CriteriaChooser( CriteriaModel *model )
   : m_model( model )
 {

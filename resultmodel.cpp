@@ -33,10 +33,11 @@ ResultModel::~ResultModel()
 
 void ResultModel::setResult( Result *result )
 {
+  beginResetModel();
   delete m_result;
+  endResetModel();
 
   m_result = result;
-  reset();
 }
 
 QVariant ResultModel::data(const QModelIndex &index, int role) const
