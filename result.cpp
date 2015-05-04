@@ -35,6 +35,7 @@ void Result::calculate()
 
   Result metaResult( "", m_comparisons );
   foreach( Comparison c, m_comparisons ) {
+    qDebug() << "COMPARISON" << c.left();
     if ( c.meta() ) {
       metaResult.addResult( c.left(), -c.ranking() );
       metaResult.addResult( c.right(), c.ranking() );
@@ -64,6 +65,8 @@ void Result::calculate()
 
 void Result::addResult( const QString &choice, int ranking, int weight )
 {
+  qDebug() << "addResult()" << choice << ranking << weight;
+
   int count = 0;
 
   QMap<QString,int>::Iterator it;
