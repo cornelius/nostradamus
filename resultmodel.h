@@ -32,6 +32,8 @@ class ResultModel : public QAbstractTableModel
     ResultModel( QObject *parent = 0 );
     ~ResultModel();
 
+    void clear();
+
     void setResult( Result * );
 
     int rowCount(const QModelIndex &parent = QModelIndex()) const;

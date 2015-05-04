@@ -34,6 +34,8 @@ class MainModel : public QWidget
   public:
     MainModel();
 
+    void clear();
+
     bool save(const QString &filename);
     bool load(const QString &filename);
 

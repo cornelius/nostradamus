@@ -65,11 +65,12 @@ void MainWindow::newFile()
 
 void MainWindow::open()
 {
-   if (maybeSave()) {
-       QString fileName = QFileDialog::getOpenFileName(this);
-       if (!fileName.isEmpty())
-           loadFile(fileName);
-   }
+  m_mainView->save();
+
+  QString filename = QFileDialog::getOpenFileName(this);
+  if (!filename.isEmpty()) {
+    m_mainView->load(filename);
+  }
 }
 
 bool MainWindow::save()
@@ -108,12 +109,14 @@ void MainWindow::createActions()
    newAct->setShortcut(tr("Ctrl+N"));
    newAct->setStatusTip(tr("Create a new file"));
    connect(newAct, SIGNAL(triggered()), this, SLOT(newFile()));
+*/
 
    openAct = new QAction(QIcon(":/images/open.png"), tr("&Open..."), this);
    openAct->setShortcut(tr("Ctrl+O"));
    openAct->setStatusTip(tr("Open an existing file"));
    connect(openAct, SIGNAL(triggered()), this, SLOT(open()));
 
+/*
    saveAct = new QAction(QIcon(":/images/save.png"), tr("&Save"), this);
    saveAct->setShortcut(tr("Ctrl+S"));
    saveAct->setStatusTip(tr("Save the document to disk"));
@@ -172,7 +175,9 @@ void MainWindow::createMenus()
    fileMenu = menuBar()->addMenu(tr("&File"));
 /*
    fileMenu->addAction(newAct);
+*/
    fileMenu->addAction(openAct);
+/*
    fileMenu->addAction(saveAct);
 */
    fileMenu->addAction(saveAsAct);

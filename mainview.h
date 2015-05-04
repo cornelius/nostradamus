@@ -41,9 +41,11 @@ class MainView : public QWidget
 
     bool save();
     bool save(const QString &filename);
-    void load();
+    bool load();
+    bool load(const QString &filename);
 
     QString filename();
+    void setFilename(const QString &filename);
 
   protected slots:
     void showChoices();

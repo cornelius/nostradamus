@@ -28,13 +28,18 @@ ResultModel::ResultModel( QObject *parent )
 
 ResultModel::~ResultModel()
 {
-  delete m_result;
+  clear();
+}
+
+void ResultModel::clear()
+{
+  delete(m_result);
 }
 
 void ResultModel::setResult( Result *result )
 {
   beginResetModel();
-  delete m_result;
+  clear();
   m_result = result;
   endResetModel();
 }

@@ -28,6 +28,10 @@ CriteriaModel::CriteriaModel( MainModel *model, QObject *parent )
 {
 }
 
+void CriteriaModel::clear()
+{
+}
+
 void CriteriaModel::addCriterion(const QString &c)
 {
   Q_UNUSED(c)

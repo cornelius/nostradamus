@@ -103,11 +103,24 @@ QString MainView::filename()
   return m_settings->value("filename", "ranking.xml").toString();
 }
 
-void MainView::load()
+void MainView::setFilename(const QString &filename)
 {
-  m_mainModel->load(filename());
+  m_settings->setValue("filename", filename);
+}
 
-  checkNavigationButtons();
+bool MainView::load()
+{
+  return m_mainModel->load(filename());
+}
+
+bool MainView::load(const QString &filename)
+{
+  if (m_mainModel->load(filename)) {
+    setFilename(filename);
+    checkNavigationButtons();
+    return true;
+  }
+  return false;
 }
 
 bool MainView::save()
@@ -118,7 +131,7 @@ bool MainView::save()
 bool MainView::save(const QString &filename)
 {
   if(m_mainModel->save(filename)) {
-    m_settings->setValue("filename", filename);
+    setFilename(filename);
     return true;
   }
   return false;

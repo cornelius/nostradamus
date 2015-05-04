@@ -59,6 +59,16 @@ ResultModel *MainModel::resultModel() const
   return m_resultModel;
 }
 
+void MainModel::clear()
+{
+  m_choicesModel->clear();
+  m_criteriaModel->clear();
+  m_resultModel->clear();
+
+  m_criteria.clear();
+  m_comparisons.clear();
+}
+
 bool MainModel::load(const QString &filename)
 {
   if ( !QFile::exists( filename ) ) {
@@ -73,6 +83,8 @@ bool MainModel::load(const QString &filename)
       tr("Unable to open file '%1' for reading.").arg( filename ) );
     return false;
   }
+
+  clear();
 
   QXmlStreamReader xml( &file );
 
