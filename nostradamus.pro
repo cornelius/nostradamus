@@ -1,5 +1,5 @@
 TEMPLATE = app
-TARGET = 
+TARGET = nostradamus
 DEPENDPATH += .
 INCLUDEPATH += .
 
