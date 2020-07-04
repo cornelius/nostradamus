@@ -23,6 +23,10 @@
 
 #include "resultmodel.h"
 
+#include <QBoxLayout>
+#include <QTableView>
+#include <QSortFilterProxyModel>
+
 ResultView::ResultView( ResultModel *model )
   : m_model( model )
 {

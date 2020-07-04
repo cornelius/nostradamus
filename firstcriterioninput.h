@@ -21,7 +21,8 @@
 #ifndef FIRSTCRITERIONINPUT_H
 #define FIRSTCRITERIONINPUT_H
 
-#include <QtGui>
+#include <QLineEdit>
+#include <QPushButton>
 
 #include "mainmodel.h"
 

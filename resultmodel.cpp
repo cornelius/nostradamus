@@ -28,15 +28,20 @@ ResultModel::ResultModel( QObject *parent )
 
 ResultModel::~ResultModel()
 {
-  delete m_result;
+  clear();
+}
+
+void ResultModel::clear()
+{
+  delete(m_result);
 }
 
 void ResultModel::setResult( Result *result )
 {
-  delete m_result;
-
+  beginResetModel();
+  clear();
   m_result = result;
-  reset();
+  endResetModel();
 }
 
 QVariant ResultModel::data(const QModelIndex &index, int role) const
@@ -49,6 +54,7 @@ QVariant ResultModel::data(const QModelIndex &index, int role) const
 
   int col = index.column();
   int row = index.row();
+
   ResultItem item = items[ row ];
 
   switch ( col ) {

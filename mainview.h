@@ -21,7 +21,8 @@
 #ifndef MAINVIEW_H
 #define MAINVIEW_H
 
-#include <QtGui>
+#include <QPushButton>
+#include <QStackedLayout>
 
 class ChoicesView;
 class CriteriaView;
@@ -30,15 +31,21 @@ class CriteriaChooser;
 class Ranker;
 class ResultView;
 class MainModel;
+class QSettings;
 
 class MainView : public QWidget
 {
     Q_OBJECT
   public:
-    MainView();
+    MainView(QSettings *);
 
-    void save();
-    void load();
+    bool save();
+    bool save(const QString &filename);
+    bool load();
+    bool load(const QString &filename);
+
+    QString filename();
+    void setFilename(const QString &filename);
 
   protected slots:
     void showChoices();
@@ -52,6 +59,8 @@ class MainView : public QWidget
     void checkNavigationButtons();
     
   private:
+    QSettings *m_settings;
+
     MainModel *m_mainModel;
 
     QPushButton *m_criteriaRankerButton;

@@ -23,6 +23,9 @@
 
 #include "mainmodel.h"
 
+#include <QBoxLayout>
+#include <QTreeView>
+
 CriteriaView::CriteriaView( MainModel *model )
   : m_model( model )
 {

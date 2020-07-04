@@ -23,7 +23,7 @@
 
 #include "mainmodel.h"
 
-#include <QtGui>
+#include <QLabel>
 
 class Ranker : public QWidget
 {

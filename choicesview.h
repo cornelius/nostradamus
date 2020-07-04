@@ -21,7 +21,9 @@
 #ifndef CHOICESVIEW_H
 #define CHOICESVIEW_H
 
-#include <QtGui>
+#include <QLineEdit>
+#include <QPushButton>
+#include <QStandardItemModel>
 
 class ChoicesView : public QWidget
 {

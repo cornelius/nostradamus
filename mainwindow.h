@@ -7,6 +7,7 @@ class QAction;
 class QMenu;
 class QTextEdit;
 class MainView;
+class QSettings;
 
 class MainWindow : public QMainWindow
 {
@@ -14,6 +15,7 @@ class MainWindow : public QMainWindow
 
   public:
     MainWindow();
+    ~MainWindow();
 
   protected:
     void closeEvent(QCloseEvent *event);
@@ -35,7 +37,6 @@ class MainWindow : public QMainWindow
     void writeSettings();
     bool maybeSave();
     void loadFile(const QString &fileName);
-    bool saveFile(const QString &fileName);
     void setCurrentFile(const QString &fileName);
     QString strippedName(const QString &fullFileName);
 
@@ -59,6 +60,8 @@ class MainWindow : public QMainWindow
     QAction *pasteAct;
     QAction *aboutAct;
     QAction *aboutQtAct;
+
+    QSettings *m_settings;
 };
 
 #endif

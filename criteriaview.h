@@ -21,7 +21,9 @@
 #ifndef CRITERIAVIEW_H
 #define CRITERIAVIEW_H
 
-#include <QtGui>
+#include <QWidget>
+#include <QLineEdit>
+#include <QPushButton>
 
 class MainModel;
 

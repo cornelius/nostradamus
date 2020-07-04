@@ -23,11 +23,10 @@
 
 #include "choice.h"
 #include "comparison.h"
-
-#include <QtGui>
-
 #include "resultmodel.h"
 #include "criteriamodel.h"
+
+#include <QWidget>
 
 class MainModel : public QWidget
 {
@@ -35,8 +34,10 @@ class MainModel : public QWidget
   public:
     MainModel();
 
-    void save();
-    void load();
+    void clear();
+
+    bool save(const QString &filename);
+    bool load(const QString &filename);
 
     QStandardItemModel *choicesModel() const;
     CriteriaModel *criteriaModel() const;
@@ -77,8 +78,6 @@ class MainModel : public QWidget
 
     QStringList m_criteria;
     Comparison::List m_comparisons;
-
-    QString m_filename;
 };
 
 #endif

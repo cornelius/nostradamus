@@ -29,7 +29,8 @@
 #include "criteriachooser.h"
 #include "firstcriterioninput.h"
 
-MainView::MainView()
+MainView::MainView(QSettings *settings)
+  : m_settings(settings)
 {
   m_mainModel = new MainModel;
   connect( m_mainModel, SIGNAL( criteriaCountChanged( int ) ),
@@ -97,16 +98,43 @@ MainView::MainView()
   checkNavigationButtons();
 }
 
-void MainView::load()
+QString MainView::filename()
 {
-  m_mainModel->load();
-
-  checkNavigationButtons();
+  return m_settings->value("filename", "ranking.xml").toString();
 }
 
-void MainView::save()
+void MainView::setFilename(const QString &filename)
 {
-  m_mainModel->save();
+  m_settings->setValue("filename", filename);
+}
+
+bool MainView::load()
+{
+  return m_mainModel->load(filename());
+}
+
+bool MainView::load(const QString &filename)
+{
+  if (m_mainModel->load(filename)) {
+    setFilename(filename);
+    checkNavigationButtons();
+    return true;
+  }
+  return false;
+}
+
+bool MainView::save()
+{
+  return save(filename());
+}
+
+bool MainView::save(const QString &filename)
+{
+  if(m_mainModel->save(filename)) {
+    setFilename(filename);
+    return true;
+  }
+  return false;
 }
 
 void MainView::showChoices()

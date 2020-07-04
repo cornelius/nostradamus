@@ -21,8 +21,9 @@
 
 #include "mainmodel.h"
 
+#include <QMessageBox>
+
 MainModel::MainModel()
-  : m_filename( "ranking.xml" )
 {
   m_choicesModel = new QStandardItemModel;
   connect( m_choicesModel, SIGNAL( rowsRemoved( const QModelIndex &, int,
@@ -58,20 +59,32 @@ ResultModel *MainModel::resultModel() const
   return m_resultModel;
 }
 
-void MainModel::load()
+void MainModel::clear()
 {
-  if ( !QFile::exists( m_filename ) ) {
+  m_choicesModel->clear();
+  m_criteriaModel->clear();
+  m_resultModel->clear();
+
+  m_criteria.clear();
+  m_comparisons.clear();
+}
+
+bool MainModel::load(const QString &filename)
+{
+  if ( !QFile::exists( filename ) ) {
     QMessageBox::information( this, tr("Information"),
       tr("Starting with new file.") );
-    return;
+    return false;
   }
 
-  QFile file( m_filename );
+  QFile file( filename );
   if ( !file.open( QIODevice::ReadOnly ) ) {
     QMessageBox::critical( this, tr("Error"),
-      tr("Unable to open file '%1' for reading.").arg( m_filename ) );
-    return;
+      tr("Unable to open file '%1' for reading.").arg( filename ) );
+    return false;
   }
+
+  clear();
 
   QXmlStreamReader xml( &file );
 
@@ -121,15 +134,17 @@ void MainModel::load()
     QMessageBox::critical( this, tr("Error"),
       tr("Error parsing XML.") );
   }
+
+  return true;
 }
 
-void MainModel::save()
+bool MainModel::save(const QString &filename)
 {
-  QFile file( m_filename );
+  QFile file( filename );
   if ( !file.open( QIODevice::WriteOnly ) ) {
     QMessageBox::critical( this, tr("Error"),
-      tr("Unable to open file '%1' for writing.").arg( m_filename ) );
-    return;
+      tr("Unable to open file '%1' for writing.").arg( filename ) );
+    return false;
   }
 
   QXmlStreamWriter xml( &file );
@@ -167,6 +182,8 @@ void MainModel::save()
   xml.writeEndElement();
   
   xml.writeEndDocument();
+
+  return true;
 }
 
 QString MainModel::firstCriterion() const
@@ -181,7 +198,7 @@ QString MainModel::firstCriterion() const
 void MainModel::addCriterion( const QString &c )
 {
   m_criteria.append( c );
-  emitCriteriaCountChanged();
+  m_criteriaModel->addCriterion( c );
 }
 
 Choice::Pair MainModel::randomPair( QAbstractItemModel *model )

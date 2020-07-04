@@ -4,3 +4,4 @@ moc_*
 nostradamus
 
 ranking.xml
+*.pro.user

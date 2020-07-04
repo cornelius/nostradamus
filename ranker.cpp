@@ -23,6 +23,8 @@
 
 #include "rankingarea.h"
 
+#include <QBoxLayout>
+
 Ranker::Ranker( MainModel *mainModel )
   : m_mainModel( mainModel )
 {

@@ -21,7 +21,7 @@
 #ifndef RESULTVIEW_H
 #define RESULTVIEW_H
 
-#include <QtGui>
+#include <QWidget>
 
 class ResultModel;
 

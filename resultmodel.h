@@ -23,7 +23,7 @@
 
 #include "result.h"
 
-#include <QtGui>
+#include <QAbstractTableModel>
 
 class ResultModel : public QAbstractTableModel
 {
@@ -31,6 +31,8 @@ class ResultModel : public QAbstractTableModel
   public:
     ResultModel( QObject *parent = 0 );
     ~ResultModel();
+
+    void clear();
 
     void setResult( Result * );
 

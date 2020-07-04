@@ -39,6 +39,8 @@ class CriteriaModel : public QAbstractTableModel
     QVariant headerData(int section, Qt::Orientation orientation,
                         int role = Qt::DisplayRole) const;
 
+    void addCriterion(const QString &c);
+
   protected:
 
   private:

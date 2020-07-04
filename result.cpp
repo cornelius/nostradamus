@@ -50,10 +50,13 @@ void Result::calculate()
   qDebug() << "RESULT";
   foreach( Comparison c, m_comparisons ) {
     if ( !c.meta() ) {
-      ResultItem i = metaResult.item( c.criterion() );
-      qDebug() << "  " << i.choice << i.ranking <<
-        i.normalizedRanking << i.comparisonsCount;
-      int weight = i.normalizedRanking + Comparison::maxRanking();
+      int weight = 1;
+      if( !metaResult.items().empty()) {
+        ResultItem i = metaResult.item( c.criterion() );
+        qDebug() << "  " << i.choice << i.ranking <<
+                    i.normalizedRanking << i.comparisonsCount;
+        weight = i.normalizedRanking + Comparison::maxRanking();
+      }
       addResult( c.left(), -c.ranking(), weight );
       addResult( c.right(), c.ranking(), weight );
     }

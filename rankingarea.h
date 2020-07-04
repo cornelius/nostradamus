@@ -21,7 +21,7 @@
 #ifndef RANKINGAREA_H
 #define RANKINGAREA_H
 
-#include <QtGui>
+#include <QFrame>
 
 class RankingArea : public QFrame
 {
